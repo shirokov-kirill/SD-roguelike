@@ -1,16 +1,25 @@
 package model
 
-import model.view.state.GameWorld
+import model.state.AdditionalInfo
+import model.view.state.Game
+import org.hexworks.zircon.api.screen.Screen
+import org.hexworks.zircon.api.uievent.UIEvent
 
-class StateModificationsHandler() {
+class StateModificationsHandler(game: Game, additionalInfo: AdditionalInfo) {
 
-    private val appState = AppState()
+    private val currentAppState = AppState(game, additionalInfo)
 
-    fun loadMap(map: GameWorld) {
-        appState.setMap(map)
+    fun getGame(): Game {
+        return currentAppState.getGame()
     }
 
-    fun getMap(): GameWorld? {
-        return appState.getMap()
+    fun getAdditionalInfo(): AdditionalInfo {
+        return currentAppState.getInfo()
     }
+
+    fun updateCurrentGame(screen: Screen, uiEvent: UIEvent): Game{
+        currentAppState.updateGame(screen, uiEvent)
+        return currentAppState.getGame()
+    }
+
 }

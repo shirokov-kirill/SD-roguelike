@@ -1,5 +1,7 @@
 package view
 
+import model.state.AdditionalInfo
+import model.view.state.Game
 import org.hexworks.zircon.api.SwingApplications
 import org.hexworks.zircon.api.application.AppConfig
 import model.view.state.GameWorld
@@ -17,7 +19,7 @@ class Viewer{
                 .build()
         )
 
-        fun render(input: InterfaceCommands, map: GameWorld? = null){
+        fun render(input: InterfaceCommands, game: Game?, additionalInfo: AdditionalInfo?){
             when(input){
                 InterfaceCommands.START -> {
                     tileGrid.clear()
@@ -25,7 +27,7 @@ class Viewer{
                 }
                 InterfaceCommands.TO_PLAY -> {
                     tileGrid.clear()
-                    PlayView(tileGrid, map!!).dock()
+                    PlayView(tileGrid, game!!, additionalInfo!!).dock()
                 }
                 else -> {
                     return

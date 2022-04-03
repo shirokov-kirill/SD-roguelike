@@ -28,7 +28,7 @@ class StartView(
             .build()
 
         startButton.onActivated {
-            Controller.throwInput(InterfaceCommands.TO_PLAY)
+            Controller.throwMouseInput(InterfaceCommands.TO_PLAY)
         }
 
         screen.addComponents(header, startButton)

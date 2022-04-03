@@ -1,7 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val zircon_version: String by project
-
 plugins {
     kotlin("jvm") version "1.6.10"
     application
@@ -16,8 +14,9 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation("org.hexworks.zircon:zircon.core-jvm:$zircon_version")
-    implementation("org.hexworks.zircon:zircon.jvm.swing:$zircon_version")
+    implementation("org.hexworks.zircon:zircon.core-jvm:2020.2.0-RELEASE")
+    implementation("org.hexworks.zircon:zircon.jvm.swing:2020.2.0-RELEASE")
+    implementation("org.hexworks.amethyst:amethyst.core-jvm:2020.1.1-RELEASE")
 }
 
 tasks.test {

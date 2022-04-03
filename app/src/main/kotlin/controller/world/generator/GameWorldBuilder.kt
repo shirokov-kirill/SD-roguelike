@@ -1,27 +1,44 @@
 package controller
 
-import view.views.play.resources.GameBlock
+import model.view.state.resourses.GameBlock
 import org.hexworks.zircon.api.data.Position3D
 import org.hexworks.zircon.api.data.Size3D
-import view.views.play.resources.GameBlockFactory
+import model.view.state.resourses.GameBlockFactory
 import model.view.state.GameWorld
 
-class GameWorldBuilder(private val worldSize: Size3D) {                         // 1
+class GameWorldBuilder(private val worldSize: Size3D) {
 
+    private var loadingType = GENERATE
+    private var filePath = DEFAULT_FILEPATH
     private val width = worldSize.xLength
     private val height = worldSize.yLength
-    private var blocks: MutableMap<Position3D, GameBlock> = mutableMapOf()  // 2
+    private var blocks: MutableMap<Position3D, GameBlock> = mutableMapOf()
 
-    fun makeCaves(): GameWorldBuilder {                                         // 3
+    fun passLoadingType(type: String, path: String): GameWorldBuilder {
+        loadingType = type
+        filePath = path
+        return this
+    }
+
+    private fun makeCaves(): GameWorldBuilder {
         return randomizeTiles()
             .smooth(8)
     }
 
-    fun build(visibleSize: Size3D): GameWorld = GameWorld(blocks, visibleSize, worldSize) // 4
+    fun proceed(): GameWorldBuilder{
+        if(loadingType == GENERATE){
+            return makeCaves()
+        } else {
+            //TODO
+            return this
+        }
+    }
+
+    fun build(visibleSize: Size3D): GameWorld = GameWorld(blocks, visibleSize, worldSize)
 
     private fun randomizeTiles(): GameWorldBuilder {
         forAllPositions { pos ->
-            blocks[pos] = if (Math.random() < 0.5) {                        // 5
+            blocks[pos] = if (Math.random() < 0.5) {
                 GameBlockFactory.floor()
             } else GameBlockFactory.wall()
         }
@@ -29,14 +46,14 @@ class GameWorldBuilder(private val worldSize: Size3D) {                         
     }
 
     private fun smooth(iterations: Int): GameWorldBuilder {
-        val newBlocks = mutableMapOf<Position3D, GameBlock>()               // 6
+        val newBlocks = mutableMapOf<Position3D, GameBlock>()
         repeat(iterations) {
             forAllPositions { pos ->
-                val (x, y, z) = pos                                         // 7
+                val (x, y, z) = pos
                 var floors = 0
                 var rocks = 0
-                pos.sameLevelNeighborsShuffled().plus(pos).forEach { neighbor -> // 8
-                    blocks.whenPresent(neighbor) { block ->                 // 9
+                pos.sameLevelNeighborsShuffled().plus(pos).forEach { neighbor ->
+                    blocks.whenPresent(neighbor) { block ->
                         if (block.isFloor) {
                             floors++
                         } else rocks++
@@ -45,16 +62,24 @@ class GameWorldBuilder(private val worldSize: Size3D) {                         
                 newBlocks[Position3D.create(x, y, z)] =
                     if (floors >= rocks) GameBlockFactory.floor() else GameBlockFactory.wall()
             }
-            blocks = newBlocks                                              // 10
+            blocks = newBlocks
         }
         return this
     }
 
-    private fun forAllPositions(fn: (Position3D) -> Unit) {                 // 11
+    private fun forAllPositions(fn: (Position3D) -> Unit) {
         worldSize.fetchPositions().forEach(fn)
     }
 
-    private fun MutableMap<Position3D, GameBlock>.whenPresent(pos: Position3D, fn: (GameBlock) -> Unit) { // 12
+    private fun MutableMap<Position3D, GameBlock>.whenPresent(pos: Position3D, fn: (GameBlock) -> Unit) {
         this[pos]?.let(fn)
+    }
+
+    companion object {
+
+        const val GENERATE = "GENERATE"
+        const val LOAD = "LOAD"
+        const val DEFAULT_FILEPATH = ""
+
     }
 }

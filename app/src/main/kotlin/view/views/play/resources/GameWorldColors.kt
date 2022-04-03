@@ -7,4 +7,6 @@ object GameWorldColors {
 
     val FLOOR_FOREGROUND = TileColor.fromString("#75715E")
     val FLOOR_BACKGROUND = TileColor.fromString("#1e2320")
+
+    val PLAYER_FOREGROUND = TileColor.fromString("#FFCD22")
 }
