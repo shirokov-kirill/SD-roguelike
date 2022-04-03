@@ -1,6 +1,6 @@
 package model.entity.attributes
 
-import org.hexworks.amethyst.api.Attribute
+
 import org.hexworks.zircon.api.data.Tile
 import kotlin.reflect.KClass
 
@@ -23,6 +23,6 @@ var AnyEntity.direction
 val AnyEntity.tile: Tile
     get() = this.tryToFindAttribute(EntityTile::class).tile
 
-fun <T : Attribute> AnyEntity.tryToFindAttribute(klass: KClass<T>): T = findAttribute(klass).orElseThrow {
+inline fun <reified T : Attribute> AnyEntity.tryToFindAttribute(klass: KClass<T>): T = findAttribute(klass).orElseThrow {
     NoSuchElementException("Entity '$this' has no property with type '${klass.simpleName}'.")
 }

@@ -16,7 +16,6 @@ dependencies {
     testImplementation(kotlin("test"))
     implementation("org.hexworks.zircon:zircon.core-jvm:2020.2.0-RELEASE")
     implementation("org.hexworks.zircon:zircon.jvm.swing:2020.2.0-RELEASE")
-    implementation("org.hexworks.amethyst:amethyst.core-jvm:2020.1.1-RELEASE")
 }
 
 tasks.test {

@@ -1,7 +1,6 @@
 package view.views
 
 import controller.Controller
-import org.hexworks.zircon.api.ColorThemes
 import org.hexworks.zircon.api.ComponentDecorations.box
 import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.component.ComponentAlignment

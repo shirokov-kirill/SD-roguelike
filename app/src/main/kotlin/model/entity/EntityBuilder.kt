@@ -4,32 +4,36 @@ import model.entity.attributes.EntityPosition
 import model.entity.attributes.EntityTile
 import model.entity.types.Player
 import view.views.play.resources.GameTiles
-import controller.GameContext
+import controller.messages.GameMessage
+import model.entity.attributes.Attribute
 import model.entity.attributes.EntityDirection
+import model.entity.behaviors.Behavior
 import model.entity.behaviors.InputHandler
+import model.entity.facets.Facet
 import model.entity.facets.Movable
 import model.entity.facets.ViewMover
+import model.entity.types.BaseType
 import model.entity.types.Empty
-import org.hexworks.amethyst.api.builder.EntityBuilder
-import org.hexworks.amethyst.api.entity.EntityType
-import org.hexworks.amethyst.api.newEntityOfType
 
-fun <T : EntityType> newGameEntityOfType(
+fun <T : BaseType> newGameEntityOfType(
     type: T,
-    init: EntityBuilder<T, GameContext>.() -> Unit
-) = newEntityOfType(type, init)
+    attributes: MutableList<Attribute>,
+    behaviors: MutableList<Behavior<T>>,
+    facets: MutableList<Facet<out GameMessage>>) = GameEntity(type, attributes, behaviors, facets)
 
 object EntityFactory {
 
-    fun createPlayer() = newGameEntityOfType(Player) {
-        attributes(EntityPosition(), EntityTile(GameTiles.PLAYER), EntityDirection())
-        behaviors(InputHandler)
-        facets(Movable, ViewMover)
-    }
+    fun createPlayer() = newGameEntityOfType(
+        Player,
+        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.PLAYER)),
+        mutableListOf(InputHandler()),
+        mutableListOf(Movable(), ViewMover())
+    )
 
-    fun getEmptyEntity() = newGameEntityOfType(Empty) {
-        attributes(EntityPosition(), EntityTile())
-        behaviors()
-        facets()
-    }
+    fun getEmptyEntity() = newGameEntityOfType(
+        Empty,
+        mutableListOf(EntityPosition(), EntityTile()),
+        mutableListOf(),
+        mutableListOf()
+    )
 }

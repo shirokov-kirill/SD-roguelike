@@ -3,9 +3,7 @@ package controller
 import model.StateModificationsHandler
 import org.hexworks.zircon.api.screen.Screen
 import org.hexworks.zircon.api.uievent.KeyboardEvent
-import org.hexworks.zircon.api.uievent.KeyboardEventType
 import org.hexworks.zircon.api.uievent.UIEvent
-import org.hexworks.zircon.api.uievent.UIEventType
 import view.InterfaceCommands
 import view.Viewer
 

@@ -1,19 +1,18 @@
 package model.entity.behaviors
 
 import controller.GameContext
+import model.entity.GameEntity
 import controller.messages.Move
 import model.entity.attributes.Directions
 import model.entity.attributes.direction
 import model.entity.attributes.position
-import org.hexworks.amethyst.api.base.BaseBehavior
-import org.hexworks.amethyst.api.entity.Entity
-import org.hexworks.amethyst.api.entity.EntityType
+import model.entity.types.Player
 import org.hexworks.zircon.api.uievent.KeyCode
 import org.hexworks.zircon.api.uievent.KeyboardEvent
 
-object InputHandler : BaseBehavior<GameContext>() {
+class InputHandler() : Behavior<Player> {
 
-    override suspend fun update(entity: Entity<EntityType, GameContext>, context: GameContext): Boolean {
+    override suspend fun update(entity: GameEntity<Player>, context: GameContext): Boolean {
         val uiEvent = context.uiEvent
         val player = context.player
         val world = context.world

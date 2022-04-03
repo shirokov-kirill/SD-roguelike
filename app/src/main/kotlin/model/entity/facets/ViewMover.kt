@@ -1,13 +1,11 @@
 package model.entity.facets
 
-import controller.GameContext
+import controller.messages.Consumed
 import controller.messages.MoveView
+import controller.messages.Response
 import model.entity.attributes.position
-import org.hexworks.amethyst.api.Consumed
-import org.hexworks.amethyst.api.Response
-import org.hexworks.amethyst.api.base.BaseFacet
 
-object ViewMover : BaseFacet<GameContext, MoveView>(MoveView::class) {
+class ViewMover : BaseFacet<MoveView>(MoveView::class){
 
     override suspend fun receive(message: MoveView): Response {
         val (context, source, previousPosition) = message

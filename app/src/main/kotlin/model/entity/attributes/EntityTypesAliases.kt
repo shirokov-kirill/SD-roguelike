@@ -1,11 +1,6 @@
 package model.entity.attributes
 
-// put this in a file called TypeAliases.kt
+import model.entity.GameEntity
+import model.entity.types.BaseType
 
-import controller.GameContext
-import org.hexworks.amethyst.api.entity.Entity
-import org.hexworks.amethyst.api.entity.EntityType
-
-typealias AnyEntity = GameEntity<EntityType>
-
-typealias GameEntity<T> = Entity<T, GameContext>
+typealias AnyEntity = GameEntity<out BaseType>

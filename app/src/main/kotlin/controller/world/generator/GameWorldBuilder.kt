@@ -10,8 +10,6 @@ class GameWorldBuilder(private val worldSize: Size3D) {
 
     private var loadingType = GENERATE
     private var filePath = DEFAULT_FILEPATH
-    private val width = worldSize.xLength
-    private val height = worldSize.yLength
     private var blocks: MutableMap<Position3D, GameBlock> = mutableMapOf()
 
     fun passLoadingType(type: String, path: String): GameWorldBuilder {

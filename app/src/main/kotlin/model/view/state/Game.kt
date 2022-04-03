@@ -1,13 +1,11 @@
 package model.view.state
 
-import controller.GameContext
-import controller.GameWorldBuilder
+import model.entity.GameEntity
 import model.entity.types.Player
-import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.zircon.api.screen.Screen
 import org.hexworks.zircon.api.uievent.UIEvent
 
-class Game(private val gameWorld: GameWorld, private val player: Entity<Player, GameContext>) {
+class Game(private val gameWorld: GameWorld, private val player: GameEntity<Player>) {
 
     fun getWorld(): GameWorld {
         return gameWorld
@@ -19,7 +17,7 @@ class Game(private val gameWorld: GameWorld, private val player: Entity<Player, 
 
     companion object{
 
-        fun create(gameWorld: GameWorld, player: Entity<Player, GameContext>) = Game(gameWorld, player)
+        fun create(gameWorld: GameWorld, player: GameEntity<Player>) = Game(gameWorld, player)
 
     }
 }

@@ -4,7 +4,6 @@ import model.state.AdditionalInfo
 import model.view.state.Game
 import org.hexworks.zircon.api.SwingApplications
 import org.hexworks.zircon.api.application.AppConfig
-import model.view.state.GameWorld
 import view.views.PlayView
 import view.views.StartView
 

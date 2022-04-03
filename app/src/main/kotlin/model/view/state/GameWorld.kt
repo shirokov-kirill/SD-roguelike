@@ -1,13 +1,11 @@
 package model.view.state
 
 import controller.GameContext
-import controller.GameEntity
+import model.entity.GameEntity
 import model.entity.attributes.position
+import model.entity.types.BaseType
 import model.entity.types.Player
 import model.view.state.resourses.GameBlock
-import org.hexworks.amethyst.api.Engine
-import org.hexworks.amethyst.api.entity.EntityType
-import org.hexworks.amethyst.internal.TurnBasedEngine
 import org.hexworks.cobalt.datatypes.Maybe
 import org.hexworks.zircon.api.builder.game.GameAreaBuilder
 import org.hexworks.zircon.api.data.Position3D
@@ -20,13 +18,13 @@ import org.hexworks.zircon.api.uievent.UIEvent
 class GameWorld(
     blocks: Map<Position3D, GameBlock>,
     visibleSize: Size3D,
-    actualSize: Size3D
+    actualSize: Size3D,
 ) : GameArea<Tile, GameBlock> by GameAreaBuilder.newBuilder<Tile, GameBlock>()
     .withVisibleSize(visibleSize)
     .withActualSize(actualSize)
     .build() {
 
-    private val engine: TurnBasedEngine<GameContext> = Engine.create()
+    val engine = GameEngine()
 
     init {
         blocks.forEach { (pos, block) ->
@@ -40,7 +38,7 @@ class GameWorld(
         engine.executeTurn(GameContext(this, screen, event, player))
     }
 
-    fun moveEntity(entity: GameEntity<EntityType>, position: Position3D): Boolean {
+    fun moveEntity(entity: GameEntity<out BaseType>, position: Position3D): Boolean {
         var success = false
 
         val old = fetchBlockAt(entity.position)
@@ -62,7 +60,7 @@ class GameWorld(
         }
     }
 
-    fun addEntity(entity: GameEntity<EntityType>, withGuarantee: Boolean, mapSize: Size3D = visibleSize): Boolean{
+    fun addEntity(entity: GameEntity<out BaseType>, withGuarantee: Boolean, mapSize: Size3D = visibleSize): Boolean{
         var attemptsCount: Int
         if(withGuarantee){
             attemptsCount = -1
