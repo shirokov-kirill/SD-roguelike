@@ -16,6 +16,11 @@ import org.hexworks.zircon.api.view.base.BaseView
 import org.hexworks.zircon.internal.game.impl.GameAreaComponentRenderer
 import view.views.play.resources.GameTiles
 
+/*
+PlayView implements main view of the game
+with Inventory, AdditionalInfo and Game Map
+ */
+
 class PlayView(
     private val grid: TileGrid,
     private val game: Game,

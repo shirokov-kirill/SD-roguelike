@@ -10,6 +10,11 @@ import model.entity.types.Player
 import org.hexworks.zircon.api.uievent.KeyCode
 import org.hexworks.zircon.api.uievent.KeyboardEvent
 
+/*
+This is a Behavior class that provides
+entity with acting according to user Input
+ */
+
 class InputHandler() : Behavior<Player> {
 
     override suspend fun update(entity: GameEntity<Player>, context: GameContext): Boolean {

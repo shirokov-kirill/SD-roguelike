@@ -9,6 +9,11 @@ import org.hexworks.zircon.api.data.CharacterTile
 import org.hexworks.zircon.api.data.Tile
 import org.hexworks.zircon.api.graphics.Symbols
 
+/*
+GameTiles identify Tiles
+(how they look)
+ */
+
 object GameTiles {
 
     val EMPTY: CharacterTile = Tile.empty()

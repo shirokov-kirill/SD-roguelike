@@ -13,13 +13,28 @@ class Controller {
         private var isFinished = false
         private var stateModificationsHandler : StateModificationsHandler? = null
 
+        /*
+        start() method can be used to create all the game
+        (suggest only to use once at the beginning)
+         */
+
         fun start(){
             interpret(InterfaceCommands.START)
         }
 
+        /*
+        throwMouseInput() method can be used to handle MouseClicks from user
+        that are not currently performed in the game
+         */
+
         fun throwMouseInput(input: InterfaceCommands){
             interpret(input)
         }
+
+        /*
+        throwKeyboardInput() method can be used to parse clicks on Keyboard from user
+        to InterfaceCommands
+         */
 
         fun throwKeyboardInput(input: KeyboardEvent, screen: Screen){
             when(input.key) {
@@ -34,9 +49,21 @@ class Controller {
             }
         }
 
+        /*
+        initializeGame() method is private and used to create ModificationHandler if not exists
+        that mainly holds all the Game state
+         */
+
         private fun initializeGame(){
-            stateModificationsHandler = Initializer.initialize(GameWorldBuilder.GENERATE, "")
+            if(stateModificationsHandler == null){
+                stateModificationsHandler = Initializer.initialize(GameWorldBuilder.GENERATE, "")
+            }
         }
+
+        /*
+        interpret() method is private and used to respond to InterfaceCommands with
+        proper modification of state and interface
+         */
 
         private fun interpret(input: InterfaceCommands, uiEvent: UIEvent? = null, screen: Screen? = null){
             when(input){

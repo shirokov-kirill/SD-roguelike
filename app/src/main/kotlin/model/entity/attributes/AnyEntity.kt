@@ -4,6 +4,11 @@ package model.entity.attributes
 import org.hexworks.zircon.api.data.Tile
 import kotlin.reflect.KClass
 
+/*
+Declare get() and set() methods for inner
+attributes of our entities
+ */
+
 var AnyEntity.position
     get() = tryToFindAttribute(EntityPosition::class).position
     set(value) {

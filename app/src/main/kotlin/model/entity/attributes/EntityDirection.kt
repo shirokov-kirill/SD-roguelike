@@ -2,6 +2,11 @@ package model.entity.attributes
 
 import org.hexworks.cobalt.databinding.api.extension.toProperty
 
+/*
+This is an Attribute class that provides
+entity with Direction
+ */
+
 class EntityDirection(
     initialDirection: Directions = Directions.TOP
 ) : Attribute{

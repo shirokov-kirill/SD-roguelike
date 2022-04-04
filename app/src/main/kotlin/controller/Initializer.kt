@@ -5,8 +5,19 @@ import model.entity.EntityFactory
 import model.state.AdditionalInfo
 import model.view.state.Game
 
+/*
+This class represents a factory
+that creates StateModificationsHandler
+ */
+
 class Initializer {
+
     companion object {
+
+        /*
+        declares static method Initializer.initialize( type, filepath )
+        that manages loading or creating new game from sources
+        */
 
         fun initialize(
             type: String = GameWorldBuilder.GENERATE,
@@ -28,4 +39,5 @@ class Initializer {
             return StateModificationsHandler(game, AdditionalInfo())
         }
     }
+
 }

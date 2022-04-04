@@ -5,6 +5,11 @@ import controller.messages.MoveView
 import controller.messages.Response
 import model.entity.attributes.position
 
+/*
+Movable is a facet that symbolise
+that entity can move visible map frame
+ */
+
 class ViewMover : BaseFacet<MoveView>(MoveView::class){
 
     override suspend fun receive(message: MoveView): Response {

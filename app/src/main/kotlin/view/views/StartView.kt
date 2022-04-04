@@ -8,6 +8,11 @@ import org.hexworks.zircon.api.grid.TileGrid
 import org.hexworks.zircon.api.view.base.BaseView
 import view.InterfaceCommands
 
+/*
+StartView implements start view with
+start button and game title
+ */
+
 class StartView(
     private val grid: TileGrid
 ) : BaseView(grid, GameConfig.THEME) {

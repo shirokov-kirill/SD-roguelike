@@ -2,6 +2,11 @@ import org.hexworks.zircon.api.CP437TilesetResources
 import org.hexworks.zircon.api.ColorThemes
 import org.hexworks.zircon.api.data.Size3D
 
+/*
+Here are implemented all base
+constants for game setup
+ */
+
 object GameConfig {
 
     val TILESET = CP437TilesetResources.rogueYun16x16()

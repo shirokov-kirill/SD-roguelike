@@ -15,7 +15,12 @@ import model.entity.facets.ViewMover
 import model.entity.types.BaseType
 import model.entity.types.Empty
 
-fun <T : BaseType> newGameEntityOfType(
+/*
+EntityFactory is a factory which
+supplies game with entities it needs
+ */
+
+private fun <T : BaseType> newGameEntityOfType(
     type: T,
     attributes: MutableList<Attribute>,
     behaviors: MutableList<Behavior<T>>,

@@ -7,6 +7,12 @@ import org.hexworks.zircon.api.application.AppConfig
 import view.views.PlayView
 import view.views.StartView
 
+/*
+Viewer is a main view part class
+that shows sufficient screen according to
+InterfaceCommands from controller part
+ */
+
 class Viewer{
 
     companion object {

@@ -12,16 +12,31 @@ class GameWorldBuilder(private val worldSize: Size3D) {
     private var filePath = DEFAULT_FILEPATH
     private var blocks: MutableMap<Position3D, GameBlock> = mutableMapOf()
 
+    /*
+    passLoadingType(type, path) method can be used to pass correct
+    loader properties to the Builder
+    */
+
     fun passLoadingType(type: String, path: String): GameWorldBuilder {
         loadingType = type
         filePath = path
         return this
     }
 
+    /*
+    makeCaves() is a private method that can be used to
+    generate final map for the game
+    */
+
     private fun makeCaves(): GameWorldBuilder {
         return randomizeTiles()
             .smooth(8)
     }
+
+    /*
+    proceed() method can be used to
+    create final map for the game according to properties passed earlier
+    */
 
     fun proceed(): GameWorldBuilder{
         if(loadingType == GENERATE){
@@ -32,7 +47,18 @@ class GameWorldBuilder(private val worldSize: Size3D) {
         }
     }
 
+    /*
+    build() method can be used to
+    create GameWorld object out of GameWorldBuilder
+    with .proceed() method applied before
+    (or you'll get empty map in the game)
+    */
+
     fun build(visibleSize: Size3D): GameWorld = GameWorld(blocks, visibleSize, worldSize)
+
+    /*
+    randomizeTiles() creates random field
+    */
 
     private fun randomizeTiles(): GameWorldBuilder {
         forAllPositions { pos ->
@@ -42,6 +68,11 @@ class GameWorldBuilder(private val worldSize: Size3D) {
         }
         return this
     }
+
+    /*
+    smooth(iterations) makes randomly created map more consistent
+    with the game context
+     */
 
     private fun smooth(iterations: Int): GameWorldBuilder {
         val newBlocks = mutableMapOf<Position3D, GameBlock>()
@@ -65,6 +96,11 @@ class GameWorldBuilder(private val worldSize: Size3D) {
         return this
     }
 
+    /*
+    firAllPositions(function) applies a function for each field
+    on the map
+     */
+
     private fun forAllPositions(fn: (Position3D) -> Unit) {
         worldSize.fetchPositions().forEach(fn)
     }
@@ -72,6 +108,11 @@ class GameWorldBuilder(private val worldSize: Size3D) {
     private fun MutableMap<Position3D, GameBlock>.whenPresent(pos: Position3D, fn: (GameBlock) -> Unit) {
         this[pos]?.let(fn)
     }
+
+    /*
+    companion object holds some constants
+    associated only with GameWorldBuilder
+     */
 
     companion object {
 

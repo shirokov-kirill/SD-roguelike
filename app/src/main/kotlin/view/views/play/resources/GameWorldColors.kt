@@ -1,5 +1,9 @@
 import org.hexworks.zircon.api.color.TileColor
 
+/*
+Implements colors
+ */
+
 object GameWorldColors {
 
     val WALL_FOREGROUND = TileColor.fromString("#75715E")
