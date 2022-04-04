@@ -43,7 +43,7 @@ class GameWorldBuilder(private val worldSize: Size3D) {
             return makeCaves()
         } else {
             //TODO
-            return this
+            throw NotImplementedError("Not implemented")
         }
     }
 

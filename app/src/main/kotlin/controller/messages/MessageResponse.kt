@@ -35,7 +35,7 @@ an ability to apply Message chain in the project
 */
 
 data class MessageResponse(private val message: GameMessage) : Response {
-    suspend fun process(): Response{
+    suspend fun process(): Response {
         return message.entity.receiveMessage(message)
     }
 }

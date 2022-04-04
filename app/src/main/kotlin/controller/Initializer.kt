@@ -39,5 +39,4 @@ class Initializer {
             return StateModificationsHandler(game, AdditionalInfo())
         }
     }
-
 }
