@@ -1,9 +1,11 @@
 package model.entity.behaviors
 
 import controller.GameContext
+import controller.messages.Hit
 import model.entity.GameEntity
 import controller.messages.Move
 import model.entity.attributes.Directions
+import model.entity.attributes.damage
 import model.entity.attributes.direction
 import model.entity.attributes.position
 import model.entity.types.Player
@@ -57,7 +59,7 @@ class InputHandler() : Behavior<Player> {
                             targetPosition = currentPos.withRelativeY(1)
                         }
                     }
-                    world.performHit(targetPosition)
+                    world.performHit(targetPosition, player.damage, context)
                 }
                 else -> {
                     print(uiEvent.code)

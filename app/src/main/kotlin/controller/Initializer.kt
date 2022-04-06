@@ -21,7 +21,8 @@ class Initializer {
 
         fun initialize(
             type: String = GameWorldBuilder.GENERATE,
-            filePath: String = ""
+            filePath: String = "",
+            difficulty: Difficulty
         ): StateModificationsHandler {
             val gameWorld = GameWorldBuilder(GameConfig.WORLD_SIZE)
                 .passLoadingType(type, filePath)
@@ -31,6 +32,19 @@ class Initializer {
             val player = EntityFactory.createPlayer()
 
             gameWorld.addEntity(player, true)
+
+            var monstersCount = 0
+            when(difficulty){
+                Difficulty.EASY -> monstersCount = 10
+                Difficulty.MEDIUM -> monstersCount = 15
+                Difficulty.HARD -> monstersCount = 20
+                Difficulty.EXTREME -> monstersCount = 35
+            }
+            while (monstersCount > 0) {
+                val monster = EntityFactory.createMonster()
+                gameWorld.addEntity(monster, true, GameConfig.WORLD_SIZE)
+                monstersCount--
+            }
 
             val game = Game(
                 gameWorld,

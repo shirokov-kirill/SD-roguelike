@@ -12,6 +12,5 @@ Messages allow entities to communicate with each other
 
 open class GameMessage(
     open val entity: GameEntity<out BaseType>,
-    open val position: Position3D,
     open val context: GameContext
 )

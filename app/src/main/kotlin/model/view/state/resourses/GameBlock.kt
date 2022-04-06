@@ -1,5 +1,8 @@
 package model.view.state.resourses
 
+import controller.GameContext
+import controller.messages.GameMessage
+import controller.messages.Hit
 import model.entity.GameEntity
 import view.views.play.resources.GameTiles.EMPTY
 import view.views.play.resources.GameTiles.FLOOR
@@ -8,11 +11,15 @@ import kotlinx.collections.immutable.persistentMapOf
 import model.entity.EntityFactory
 import model.entity.attributes.tile
 import model.entity.types.BaseType
+import model.entity.types.Creature
 import model.entity.types.Empty
 import org.hexworks.zircon.api.data.BlockTileType
 import org.hexworks.zircon.api.data.Tile
 import org.hexworks.zircon.api.data.base.BaseBlock
+import view.views.play.resources.GameTiles.MONSTER
 import view.views.play.resources.GameTiles.PLAYER
+import kotlin.reflect.full.isSubtypeOf
+import kotlin.reflect.typeOf
 
 class GameBlock(
     content: Tile = FLOOR,
@@ -44,12 +51,22 @@ class GameBlock(
         return currentEntity.type != Empty || isWall
     }
 
-    fun hit() {
+    private inline fun <reified T> Any?.tryCast(block: T.() -> Unit) {
+        if (this is T) {
+            block()
+        }
+    }
+
+    suspend fun hit(damage: Int, context: GameContext) {
         if(!canHit()){
             return
         } else {
             if(isWall) {
                 content = FLOOR
+            } else {
+                currentEntity.tryCast<GameEntity<Creature>> {
+                    this.receiveMessage(Hit(this, damage, context))
+                }
             }
         }
     }
@@ -63,6 +80,7 @@ class GameBlock(
         val entityTile = currentEntity.tile
         content = when {
             entityTile == PLAYER -> PLAYER
+            entityTile == MONSTER -> MONSTER
             entityTile == WALL -> WALL
             else -> defaultTile
         }

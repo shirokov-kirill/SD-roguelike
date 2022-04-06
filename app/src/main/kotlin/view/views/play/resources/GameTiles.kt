@@ -2,6 +2,7 @@ package view.views.play.resources
 
 import GameWorldColors.FLOOR_BACKGROUND
 import GameWorldColors.FLOOR_FOREGROUND
+import GameWorldColors.MONSTER_FOREGROUND
 import GameWorldColors.PLAYER_FOREGROUND
 import GameWorldColors.WALL_BACKGROUND
 import GameWorldColors.WALL_FOREGROUND
@@ -33,6 +34,12 @@ object GameTiles {
     val PLAYER: CharacterTile = Tile.newBuilder()
         .withCharacter('@')
         .withForegroundColor(PLAYER_FOREGROUND)
+        .withBackgroundColor(FLOOR_BACKGROUND)
+        .buildCharacterTile()
+
+    val MONSTER: CharacterTile = Tile.newBuilder()
+        .withCharacter('M')
+        .withForegroundColor(MONSTER_FOREGROUND)
         .withBackgroundColor(FLOOR_BACKGROUND)
         .buildCharacterTile()
 }

@@ -56,7 +56,7 @@ class Controller {
 
         private fun initializeGame(){
             if(stateModificationsHandler == null){
-                stateModificationsHandler = Initializer.initialize(GameWorldBuilder.GENERATE, "")
+                stateModificationsHandler = Initializer.initialize(GameWorldBuilder.GENERATE, "", Difficulty.EASY)
             }
         }
 

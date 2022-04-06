@@ -53,10 +53,10 @@ class GameWorld(
         return success
     }
 
-    fun performHit(position: Position3D) {
+    suspend fun performHit(position: Position3D, damage: Int, context: GameContext) {
         val target = fetchBlockAt(position)
         if(target.isPresent) {
-            target.get().hit()
+            target.get().hit(damage, context)
         }
     }
 
@@ -93,5 +93,13 @@ class GameWorld(
             return true
         }
         return false
+    }
+
+    fun removeEntity(entity: GameEntity<out BaseType>){
+
+        fetchBlockAt(entity.position).map {
+            it.removeEntity()
+        }
+        engine.removeEntity(entity)
     }
 }
