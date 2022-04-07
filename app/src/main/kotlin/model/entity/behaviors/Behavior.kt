@@ -15,6 +15,6 @@ interface Behavior<T: BaseType> {
     according to context
      */
 
-    suspend fun update(entity: GameEntity<T>, context: GameContext): Boolean
+    fun update(entity: GameEntity<T>, context: GameContext): Boolean
 
 }

@@ -54,6 +54,13 @@ class PlayView(
             .withAlignmentWithin(screen, ComponentAlignment.TOP_RIGHT)
             .build()
 
+        sidebar.addFragment(
+            AdditionalInfoFragment(
+                sidebar.contentSize.width,
+                additionalInfo
+            )
+        )
+
         screen.addComponents(sidebar, logArea, gameComponent)
 
         screen.handleKeyboardEvents(KeyboardEventType.KEY_PRESSED) { event, _ ->

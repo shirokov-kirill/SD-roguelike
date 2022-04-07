@@ -7,7 +7,7 @@ import model.entity.attributes.hitPoints
 
 class Hitable: BaseFacet<Hit>(Hit::class) {
 
-    override suspend fun receive(message: Hit): Response {
+    override fun receive(message: Hit): Response {
         val entity = message.entity
         val damage = message.damage
         val context = message.context

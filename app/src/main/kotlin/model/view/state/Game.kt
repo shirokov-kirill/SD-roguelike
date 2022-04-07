@@ -1,5 +1,6 @@
 package model.view.state
 
+import kotlinx.coroutines.Job
 import model.entity.GameEntity
 import model.entity.types.Player
 import org.hexworks.zircon.api.screen.Screen
@@ -11,7 +12,11 @@ class Game(private val gameWorld: GameWorld, private val player: GameEntity<Play
         return gameWorld
     }
 
-    fun updateWorld(screen: Screen, event: UIEvent) {
+    fun getPlayer(): GameEntity<Player> {
+        return player
+    }
+
+    fun updateWorld(screen: Screen, event: UIEvent){
         gameWorld.update(screen, event, player)
     }
 

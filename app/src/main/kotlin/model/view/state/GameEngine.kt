@@ -20,13 +20,7 @@ class GameEngine(
         entities.remove(entity)
     }
 
-    @Synchronized
-    fun executeTurn(context: GameContext): Job {
-        return launch {
-            entities.filter { it.needsUpdate() }.map {
-                async { it.update(context) }
-            }.awaitAll()
-        }
+    fun executeTurn(context: GameContext) {
+        entities.filter { it.needsUpdate() }.map { it.update(context) }
     }
-
 }

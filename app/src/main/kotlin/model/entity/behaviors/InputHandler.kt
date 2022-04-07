@@ -4,10 +4,7 @@ import controller.GameContext
 import controller.messages.Hit
 import model.entity.GameEntity
 import controller.messages.Move
-import model.entity.attributes.Directions
-import model.entity.attributes.damage
-import model.entity.attributes.direction
-import model.entity.attributes.position
+import model.entity.attributes.*
 import model.entity.types.Player
 import org.hexworks.zircon.api.uievent.KeyCode
 import org.hexworks.zircon.api.uievent.KeyboardEvent
@@ -19,14 +16,14 @@ entity with acting according to user Input
 
 class InputHandler() : Behavior<Player> {
 
-    override suspend fun update(entity: GameEntity<Player>, context: GameContext): Boolean {
+    override fun update(entity: GameEntity<Player>, context: GameContext): Boolean {
         val uiEvent = context.uiEvent
         val player = context.player
         val world = context.world
         val currentPos = player.position
         if (uiEvent is KeyboardEvent) {
             var newPosition = currentPos
-            var targetPosition = currentPos
+            var targetPosition = player.targetPosition
             when (uiEvent.code) {
                 KeyCode.KEY_W -> {
                     player.direction = Directions.TOP
@@ -45,20 +42,6 @@ class InputHandler() : Behavior<Player> {
                     newPosition = currentPos.withRelativeX(1)
                 }
                 KeyCode.SPACE -> {
-                    when(player.direction) {
-                        Directions.LEFT -> {
-                            targetPosition = currentPos.withRelativeX(-1)
-                        }
-                        Directions.RIGHT -> {
-                            targetPosition = currentPos.withRelativeX(1)
-                        }
-                        Directions.TOP -> {
-                            targetPosition = currentPos.withRelativeY(-1)
-                        }
-                        Directions.BOTTOM -> {
-                            targetPosition = currentPos.withRelativeY(1)
-                        }
-                    }
                     world.performHit(targetPosition, player.damage, context)
                 }
                 else -> {

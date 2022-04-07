@@ -47,25 +47,21 @@ class GameBlock(
         updateContent()
     }
 
+
+
     private fun canHit(): Boolean{
-        return currentEntity.type != Empty || isWall
+        return isWall || currentEntity.isCreature()
     }
 
-    private inline fun <reified T> Any?.tryCast(block: T.() -> Unit) {
-        if (this is T) {
-            block()
-        }
-    }
-
-    suspend fun hit(damage: Int, context: GameContext) {
+    fun hit(damage: Int, context: GameContext) {
         if(!canHit()){
             return
         } else {
             if(isWall) {
                 content = FLOOR
             } else {
-                currentEntity.tryCast<GameEntity<Creature>> {
-                    this.receiveMessage(Hit(this, damage, context))
+                if(currentEntity.isCreature()){
+                    currentEntity.receiveMessage(Hit(currentEntity as GameEntity<Creature>, damage, context))
                 }
             }
         }

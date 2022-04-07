@@ -14,7 +14,7 @@ abstract class BaseFacet<P: GameMessage>(
 ): Facet<P> {
 
     @Suppress("UNCHECKED_CAST")
-    override suspend fun tryReceive(message: GameMessage): Response {
+    override fun tryReceive(message: GameMessage): Response {
         if(message::class == messageType){
             return receive(message as P)
         } else {

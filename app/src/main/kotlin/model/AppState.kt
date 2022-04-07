@@ -1,5 +1,6 @@
 package model
 
+import kotlinx.coroutines.Job
 import model.state.AdditionalInfo
 import model.view.state.Game
 import model.view.state.GameWorld
@@ -18,7 +19,10 @@ class AppState (private val game: Game, private val info: AdditionalInfo) {
 
     fun updateGame(screen: Screen, uiEvent: UIEvent){
         game.updateWorld(screen, uiEvent)
-        //TODO update info
+    }
+
+    fun updateInfo() {
+        info.update(game)
     }
 
 }

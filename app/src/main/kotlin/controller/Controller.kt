@@ -2,6 +2,7 @@ package controller
 
 import model.StateModificationsHandler
 import org.hexworks.zircon.api.screen.Screen
+import org.hexworks.zircon.api.uievent.KeyCode
 import org.hexworks.zircon.api.uievent.KeyboardEvent
 import org.hexworks.zircon.api.uievent.UIEvent
 import view.InterfaceCommands
@@ -37,12 +38,12 @@ class Controller {
          */
 
         fun throwKeyboardInput(input: KeyboardEvent, screen: Screen){
-            when(input.key) {
-                "w" -> interpret(InterfaceCommands.GO_TOP, input, screen)
-                "a" -> interpret(InterfaceCommands.GO_LEFT, input, screen)
-                "s" -> interpret(InterfaceCommands.GO_BOTTOM, input, screen)
-                "d" -> interpret(InterfaceCommands.GO_RIGHT, input, screen)
-                " " -> interpret(InterfaceCommands.HIT, input, screen)
+            when(input.code) {
+                KeyCode.KEY_W -> interpret(InterfaceCommands.GO_TOP, input, screen)
+                KeyCode.KEY_A -> interpret(InterfaceCommands.GO_LEFT, input, screen)
+                KeyCode.KEY_S -> interpret(InterfaceCommands.GO_BOTTOM, input, screen)
+                KeyCode.KEY_D -> interpret(InterfaceCommands.GO_RIGHT, input, screen)
+                KeyCode.SPACE -> interpret(InterfaceCommands.HIT, input, screen)
                 else -> {
                     print(input.key)
                 }

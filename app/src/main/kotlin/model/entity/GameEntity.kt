@@ -8,6 +8,7 @@ import model.entity.attributes.Attribute
 import model.entity.behaviors.Behavior
 import model.entity.facets.Facet
 import model.entity.types.BaseType
+import model.entity.types.Creature
 import org.hexworks.cobalt.datatypes.Maybe
 import kotlin.reflect.KClass
 
@@ -36,12 +37,16 @@ class GameEntity<T: BaseType>(
         return Maybe.empty()
     }
 
+    fun isCreature(): Boolean {
+        return type is Creature
+    }
+
     /*
     receiveMessage(message) is used to perform some action on an entity
     "from outside" and return a sufficient Response
     */
 
-    suspend fun receiveMessage(message: GameMessage): Response{
+    fun receiveMessage(message: GameMessage): Response{
         var response: Response = Pass
         for(facet in facets) {
             var lastCommand = message
@@ -66,7 +71,7 @@ class GameEntity<T: BaseType>(
     "from inside", generate Message("from outside behavior") and return a sufficient Response.
     */
 
-    suspend fun update(context: GameContext): Boolean {
+    fun update(context: GameContext): Boolean {
         return behaviors.fold(false) { result, behavior ->
             result or behavior.update(this, context)
         }
