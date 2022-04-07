@@ -42,7 +42,7 @@ class InputHandler() : Behavior<Player> {
                     newPosition = currentPos.withRelativeX(1)
                 }
                 KeyCode.SPACE -> {
-                    world.performHit(targetPosition, player.damage, context)
+                    world.performHit(targetPosition, player, context)
                 }
                 else -> {
                     print(uiEvent.code)

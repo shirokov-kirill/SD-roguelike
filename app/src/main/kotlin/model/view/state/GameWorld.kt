@@ -56,10 +56,10 @@ class GameWorld(
         return success
     }
 
-    fun performHit(position: Position3D, damage: Int, context: GameContext) {
+    fun performHit(position: Position3D, fromEntity: GameEntity<out Creature>, context: GameContext) {
         val target = fetchBlockAt(position)
         if(target.isPresent) {
-            target.get().hit(damage, context)
+            target.get().hit(fromEntity, context)
         }
     }
 

@@ -7,6 +7,7 @@ import model.entity.types.Creature
 
 data class Hit(
     override val entity: GameEntity<out Creature>,
+    val fromEntity: GameEntity<out Creature>,
     val damage: Int,
     override val context: GameContext
 ) : GameMessage(entity, context)

@@ -9,6 +9,7 @@ import view.views.play.resources.GameTiles.FLOOR
 import view.views.play.resources.GameTiles.WALL
 import kotlinx.collections.immutable.persistentMapOf
 import model.entity.EntityFactory
+import model.entity.attributes.damage
 import model.entity.attributes.tile
 import model.entity.types.BaseType
 import model.entity.types.Creature
@@ -47,13 +48,11 @@ class GameBlock(
         updateContent()
     }
 
-
-
     private fun canHit(): Boolean{
         return isWall || currentEntity.isCreature()
     }
 
-    fun hit(damage: Int, context: GameContext) {
+    fun hit(entity: GameEntity<out Creature>, context: GameContext) {
         if(!canHit()){
             return
         } else {
@@ -61,7 +60,7 @@ class GameBlock(
                 content = FLOOR
             } else {
                 if(currentEntity.isCreature()){
-                    currentEntity.receiveMessage(Hit(currentEntity as GameEntity<Creature>, damage, context))
+                    currentEntity.receiveMessage(Hit(currentEntity as GameEntity<Creature>, entity, entity.damage, context))
                 }
             }
         }
