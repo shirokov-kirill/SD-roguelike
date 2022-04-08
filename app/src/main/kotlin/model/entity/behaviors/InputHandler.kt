@@ -20,6 +20,9 @@ class InputHandler() : Behavior<Player> {
         val uiEvent = context.uiEvent
         val player = context.player
         val world = context.world
+        if(player == null || uiEvent == null) {
+            return true
+        }
         val currentPos = player.position
         if (uiEvent is KeyboardEvent) {
             var newPosition = currentPos

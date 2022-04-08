@@ -26,7 +26,7 @@ class GameWorld(
     .withActualSize(actualSize)
     .build() {
 
-    val engine = GameEngine()
+    val engine = GameEngine(this)
 
     init {
         blocks.forEach { (pos, block) ->

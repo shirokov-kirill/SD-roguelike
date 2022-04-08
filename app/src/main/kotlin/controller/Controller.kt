@@ -11,6 +11,7 @@ import view.Viewer
 class Controller {
 
     companion object {
+        var isActive: Boolean = false
         private var isFinished = false
         private var stateModificationsHandler : StateModificationsHandler? = null
 
@@ -29,6 +30,9 @@ class Controller {
          */
 
         fun throwMouseInput(input: InterfaceCommands){
+            if (input == InterfaceCommands.TO_PLAY){
+                isActive = true
+            }
             interpret(input)
         }
 
@@ -48,6 +52,10 @@ class Controller {
                     print(input.key)
                 }
             }
+        }
+
+        fun onGameSecondlyChange() {
+            interpret(InterfaceCommands.TO_PLAY)
         }
 
         /*

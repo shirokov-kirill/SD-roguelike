@@ -4,8 +4,10 @@ import model.entity.types.Player
 import view.views.play.resources.GameTiles
 import controller.messages.GameMessage
 import model.entity.attributes.*
+import model.entity.behaviors.AgressiveMove
 import model.entity.behaviors.Behavior
 import model.entity.behaviors.InputHandler
+import model.entity.behaviors.ScaryMove
 import model.entity.facets.Facet
 import model.entity.facets.Hitable
 import model.entity.facets.Movable
@@ -34,10 +36,37 @@ object EntityFactory {
         mutableListOf(Movable(), ViewMover(), Hitable())
     )
 
-    fun createMonster() = newGameEntityOfType(
+    fun createMonster() = createMonsterWithProbability()
+
+    private fun createMonsterWithProbability(): GameEntity<Monster> {
+        val res = Math.random()
+        if(res < 0.33){
+            return createAgressiveMonster()
+        } else if(res < 0.66){
+            return createScaredMonster()
+        } else {
+            return createStandingMonster()
+        }
+    }
+
+    private fun createScaredMonster() = newGameEntityOfType(
         Monster,
-        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.MONSTER), EntityLevel()),
+        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.SCARED_MONSTER), EntityLevel()),
+        mutableListOf(ScaryMove()),
+        mutableListOf(Movable(), Hitable())
+    )
+
+    private fun createStandingMonster() = newGameEntityOfType(
+        Monster,
+        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.STANDING_MONSTER), EntityLevel()),
         mutableListOf(),
+        mutableListOf(Movable(), Hitable())
+    )
+
+    private fun createAgressiveMonster() = newGameEntityOfType(
+        Monster,
+        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.AGRESSIVE_MONSTER), EntityLevel()),
+        mutableListOf(AgressiveMove()),
         mutableListOf(Movable(), Hitable())
     )
 

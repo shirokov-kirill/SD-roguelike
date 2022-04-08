@@ -11,14 +11,13 @@ import kotlinx.collections.immutable.persistentMapOf
 import model.entity.EntityFactory
 import model.entity.attributes.damage
 import model.entity.attributes.tile
-import model.entity.types.BaseType
-import model.entity.types.Creature
-import model.entity.types.Empty
+import model.entity.types.*
 import org.hexworks.zircon.api.data.BlockTileType
 import org.hexworks.zircon.api.data.Tile
 import org.hexworks.zircon.api.data.base.BaseBlock
-import view.views.play.resources.GameTiles.MONSTER
+import view.views.play.resources.GameTiles.AGRESSIVE_MONSTER
 import view.views.play.resources.GameTiles.PLAYER
+import view.views.play.resources.GameTiles.SCARED_MONSTER
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.typeOf
 
@@ -74,8 +73,8 @@ class GameBlock(
     private fun updateContent() {
         val entityTile = currentEntity.tile
         content = when {
-            entityTile == PLAYER -> PLAYER
-            entityTile == MONSTER -> MONSTER
+            currentEntity.type == Player -> entityTile
+            currentEntity.type == Monster -> entityTile
             entityTile == WALL -> WALL
             else -> defaultTile
         }

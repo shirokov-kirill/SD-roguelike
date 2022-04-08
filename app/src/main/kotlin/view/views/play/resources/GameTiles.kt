@@ -1,9 +1,11 @@
 package view.views.play.resources
 
+import GameWorldColors.AGRESSIVE_MONSTER_FOREGROUND
 import GameWorldColors.FLOOR_BACKGROUND
 import GameWorldColors.FLOOR_FOREGROUND
-import GameWorldColors.MONSTER_FOREGROUND
 import GameWorldColors.PLAYER_FOREGROUND
+import GameWorldColors.SCARED_MONSTER_FOREGROUND
+import GameWorldColors.STANDING_MONSTER_FOREGROUND
 import GameWorldColors.WALL_BACKGROUND
 import GameWorldColors.WALL_FOREGROUND
 import org.hexworks.zircon.api.data.CharacterTile
@@ -37,9 +39,21 @@ object GameTiles {
         .withBackgroundColor(FLOOR_BACKGROUND)
         .buildCharacterTile()
 
-    val MONSTER: CharacterTile = Tile.newBuilder()
+    val SCARED_MONSTER: CharacterTile = Tile.newBuilder()
         .withCharacter('M')
-        .withForegroundColor(MONSTER_FOREGROUND)
+        .withForegroundColor(SCARED_MONSTER_FOREGROUND)
+        .withBackgroundColor(FLOOR_BACKGROUND)
+        .buildCharacterTile()
+
+    val AGRESSIVE_MONSTER: CharacterTile = Tile.newBuilder()
+        .withCharacter('M')
+        .withForegroundColor(AGRESSIVE_MONSTER_FOREGROUND)
+        .withBackgroundColor(FLOOR_BACKGROUND)
+        .buildCharacterTile()
+
+    val STANDING_MONSTER: CharacterTile = Tile.newBuilder()
+        .withCharacter('M')
+        .withForegroundColor(STANDING_MONSTER_FOREGROUND)
         .withBackgroundColor(FLOOR_BACKGROUND)
         .buildCharacterTile()
 }

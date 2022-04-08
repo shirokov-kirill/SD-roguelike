@@ -1,16 +1,39 @@
 package model.view.state
 
+import controller.Controller
 import controller.GameContext
 import kotlinx.coroutines.*
 import model.entity.GameEntity
 import model.entity.types.BaseType
+import model.entity.types.Player
 import kotlin.coroutines.CoroutineContext
 
 class GameEngine(
+    private val world: GameWorld,
     override val coroutineContext: CoroutineContext = Dispatchers.Default
 ) : CoroutineScope {
 
+    private var mainJob: Job
+    private var player: GameEntity<Player>? = null
     private val entities: MutableList<GameEntity<out BaseType>> = mutableListOf()
+
+    init {
+        this.mainJob = launch {
+            while(true) {
+                if(Controller.isActive){
+                    executeGameTurn()
+                    delay(1000L)
+                } else {
+                    delay(100L)
+                }
+            }
+        }
+    }
+
+    private fun executeGameTurn() {
+        entities.filter { it.needsUpdate() && it.type != Player }.map { it.update(GameContext(this.world, null, null, this.player)) }
+        Controller.onGameSecondlyChange()
+    }
 
     fun addEntity(entity: GameEntity<out BaseType>){
         entities.add(entity)
@@ -21,6 +44,7 @@ class GameEngine(
     }
 
     fun executeTurn(context: GameContext) {
-        entities.filter { it.needsUpdate() }.map { it.update(context) }
+        this.player = context.player
+        entities.filter { it.needsUpdate() && it.type == Player }.map { it.update(context) }
     }
 }

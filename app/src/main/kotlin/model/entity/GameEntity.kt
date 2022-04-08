@@ -19,7 +19,7 @@ GameEntity is a base class for any entity in the game
 class GameEntity<T: BaseType>(
     val type: T,
     val attributes: MutableList<out Attribute>,
-    val behaviors: MutableList<out Behavior<T>>,
+    val behaviors: MutableList<Behavior<T>>,
     val facets: MutableList<out Facet<out GameMessage>>
 ) {
 

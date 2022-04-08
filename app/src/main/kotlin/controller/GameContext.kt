@@ -13,7 +13,7 @@ in order to inform it about new UIEvent happened
 
 data class GameContext(
     val world: GameWorld,
-    val screen: Screen,
-    val uiEvent: UIEvent,
-    val player: GameEntity<Player>
+    val screen: Screen?,
+    val uiEvent: UIEvent?,
+    val player: GameEntity<Player>?
 )
