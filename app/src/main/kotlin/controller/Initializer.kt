@@ -40,10 +40,19 @@ class Initializer {
                 Difficulty.HARD -> monstersCount = 20
                 Difficulty.EXTREME -> monstersCount = 35
             }
+
+            var equipmentCount = 15
+
             while (monstersCount > 0) {
                 val monster = EntityFactory.createMonster()
                 gameWorld.addEntity(monster, true, GameConfig.WORLD_SIZE)
                 monstersCount--
+            }
+
+            while (equipmentCount > 0) {
+                val equipment = EntityFactory.createEqiupment()
+                gameWorld.addEntity(equipment, true, GameConfig.WORLD_SIZE)
+                equipmentCount--
             }
 
             val game = Game(

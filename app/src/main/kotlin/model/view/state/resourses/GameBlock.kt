@@ -1,25 +1,20 @@
 package model.view.state.resourses
 
 import controller.GameContext
-import controller.messages.GameMessage
 import controller.messages.Hit
-import model.entity.GameEntity
 import view.views.play.resources.GameTiles.EMPTY
 import view.views.play.resources.GameTiles.FLOOR
 import view.views.play.resources.GameTiles.WALL
 import kotlinx.collections.immutable.persistentMapOf
 import model.entity.EntityFactory
+import model.entity.GameEntity
 import model.entity.attributes.damage
 import model.entity.attributes.tile
 import model.entity.types.*
 import org.hexworks.zircon.api.data.BlockTileType
 import org.hexworks.zircon.api.data.Tile
 import org.hexworks.zircon.api.data.base.BaseBlock
-import view.views.play.resources.GameTiles.AGRESSIVE_MONSTER
-import view.views.play.resources.GameTiles.PLAYER
-import view.views.play.resources.GameTiles.SCARED_MONSTER
-import kotlin.reflect.full.isSubtypeOf
-import kotlin.reflect.typeOf
+import view.views.play.resources.GameTiles.DROPPED_EQUIPMENT
 
 class GameBlock(
     content: Tile = FLOOR,
@@ -38,6 +33,9 @@ class GameBlock(
 
     val isEmptyBlock: Boolean
         get() = currentEntity.type == Empty && content == FLOOR
+
+    val isEquipmentEntity: Boolean
+        get() = currentEntity.type is Equipment
 
     val entity: GameEntity<out BaseType>
         get() = currentEntity
@@ -76,6 +74,7 @@ class GameBlock(
             currentEntity.type == Player -> entityTile
             currentEntity.type == Monster -> entityTile
             entityTile == WALL -> WALL
+            entityTile == DROPPED_EQUIPMENT -> entityTile
             else -> defaultTile
         }
     }

@@ -5,12 +5,12 @@ import controller.messages.Move
 import controller.sameLevelNeighborsShuffled
 import model.entity.GameEntity
 import model.entity.attributes.position
-import model.entity.types.Monster
+import model.entity.types.Creature
 import org.hexworks.zircon.api.data.Position3D
 
-class ScaryMove: Behavior<Monster> {
+class ScaryMove: Behavior{
 
-    override fun update(entity: GameEntity<Monster>, context: GameContext): Boolean {
+    override fun update(entity: GameEntity<Creature>, context: GameContext): Boolean {
         val player = context.player
         var newPosition: Position3D
         if(player == null){

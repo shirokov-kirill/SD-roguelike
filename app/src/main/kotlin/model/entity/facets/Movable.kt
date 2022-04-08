@@ -2,7 +2,6 @@ package model.entity.facets
 
 import controller.messages.*
 import model.entity.attributes.position
-import model.entity.types.Creature
 import model.entity.types.Player
 
 /*

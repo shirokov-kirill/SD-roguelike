@@ -1,10 +1,10 @@
 package model.entity.behaviors
 
 import controller.GameContext
-import controller.messages.Hit
-import model.entity.GameEntity
 import controller.messages.Move
+import model.entity.GameEntity
 import model.entity.attributes.*
+import model.entity.types.Creature
 import model.entity.types.Player
 import org.hexworks.zircon.api.uievent.KeyCode
 import org.hexworks.zircon.api.uievent.KeyboardEvent
@@ -14,9 +14,9 @@ This is a Behavior class that provides
 entity with acting according to user Input
  */
 
-class InputHandler() : Behavior<Player> {
+class InputHandler() : Behavior{
 
-    override fun update(entity: GameEntity<Player>, context: GameContext): Boolean {
+    override fun update(entity: GameEntity<Creature>, context: GameContext): Boolean {
         val uiEvent = context.uiEvent
         val player = context.player
         val world = context.world

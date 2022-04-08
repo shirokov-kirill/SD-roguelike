@@ -1,6 +1,7 @@
 package view.views.play.resources
 
 import GameWorldColors.AGRESSIVE_MONSTER_FOREGROUND
+import GameWorldColors.DROPPED_EQUIPMENT
 import GameWorldColors.FLOOR_BACKGROUND
 import GameWorldColors.FLOOR_FOREGROUND
 import GameWorldColors.PLAYER_FOREGROUND
@@ -54,6 +55,12 @@ object GameTiles {
     val STANDING_MONSTER: CharacterTile = Tile.newBuilder()
         .withCharacter('M')
         .withForegroundColor(STANDING_MONSTER_FOREGROUND)
+        .withBackgroundColor(FLOOR_BACKGROUND)
+        .buildCharacterTile()
+
+    val DROPPED_EQUIPMENT: CharacterTile = Tile.newBuilder()
+        .withCharacter('?')
+        .withForegroundColor(GameWorldColors.DROPPED_EQUIPMENT)
         .withBackgroundColor(FLOOR_BACKGROUND)
         .buildCharacterTile()
 }

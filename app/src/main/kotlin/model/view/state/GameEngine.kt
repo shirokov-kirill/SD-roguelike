@@ -5,6 +5,7 @@ import controller.GameContext
 import kotlinx.coroutines.*
 import model.entity.GameEntity
 import model.entity.types.BaseType
+import model.entity.types.Creature
 import model.entity.types.Player
 import kotlin.coroutines.CoroutineContext
 
@@ -31,7 +32,7 @@ class GameEngine(
     }
 
     private fun executeGameTurn() {
-        entities.filter { it.needsUpdate() && it.type != Player }.map { it.update(GameContext(this.world, null, null, this.player)) }
+        entities.filter { it.type is Creature } .filter { it.needsUpdate() && it.type != Player }.map { it.update(GameContext(this.world, null, null, this.player)) }
         Controller.onGameSecondlyChange()
     }
 

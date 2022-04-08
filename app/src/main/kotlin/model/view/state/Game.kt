@@ -1,7 +1,7 @@
 package model.view.state
 
-import kotlinx.coroutines.Job
 import model.entity.GameEntity
+import model.entity.types.Creature
 import model.entity.types.Player
 import org.hexworks.zircon.api.screen.Screen
 import org.hexworks.zircon.api.uievent.UIEvent

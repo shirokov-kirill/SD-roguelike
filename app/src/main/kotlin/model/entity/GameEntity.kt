@@ -16,10 +16,10 @@ import kotlin.reflect.KClass
 GameEntity is a base class for any entity in the game
  */
 
-class GameEntity<T: BaseType>(
-    val type: T,
-    val attributes: MutableList<out Attribute>,
-    val behaviors: MutableList<Behavior<T>>,
+open class GameEntity<T: BaseType>(
+    open val type: T,
+    open val attributes: MutableList<out Attribute>,
+    val behaviors: MutableList<Behavior>,
     val facets: MutableList<out Facet<out GameMessage>>
 ) {
 
@@ -28,7 +28,7 @@ class GameEntity<T: BaseType>(
     from the attributes list
     */
 
-    inline fun <reified V : Attribute> findAttribute(klass: KClass<V>): Maybe<V>{
+    inline fun <reified V : Attribute> findAttribute(klass: KClass<V>): Maybe<V> {
         for(attribute in attributes) {
             if(attribute is V){
                 return Maybe.of(attribute)
@@ -46,15 +46,18 @@ class GameEntity<T: BaseType>(
     "from outside" and return a sufficient Response
     */
 
-    fun receiveMessage(message: GameMessage): Response{
-        var response: Response = Pass
-        for(facet in facets) {
-            var lastCommand = message
-            if (response == Pass) {
-                response = facet.tryReceive(lastCommand)
+    fun receiveMessage(message: GameMessage): Response {
+        if(isCreature()){
+            var response: Response = Pass
+            for(facet in facets) {
+                var lastCommand = message
+                if (response == Pass) {
+                    response = facet.tryReceive(lastCommand)
+                }
             }
+            return response
         }
-        return response
+        return Pass
     }
 
     /*
@@ -63,7 +66,7 @@ class GameEntity<T: BaseType>(
     */
 
     fun needsUpdate(): Boolean {
-        return behaviors.isNotEmpty()
+        return isCreature() && behaviors.isNotEmpty()
     }
 
     /*
@@ -72,9 +75,12 @@ class GameEntity<T: BaseType>(
     */
 
     fun update(context: GameContext): Boolean {
-        return behaviors.fold(false) { result, behavior ->
-            result or behavior.update(this, context)
+        if(isCreature()){
+            return behaviors.fold(false) { result, behavior ->
+                result or behavior.update(this as GameEntity<Creature>, context)
+            }
         }
+        return false
     }
 
 }

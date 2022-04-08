@@ -2,7 +2,7 @@ package controller.messages
 
 import controller.GameContext
 import model.entity.GameEntity
-import model.entity.types.BaseType
+import model.entity.types.Creature
 import org.hexworks.zircon.api.data.Position3D
 
 /*
@@ -11,6 +11,6 @@ tells an entity it needs to move
  */
 
 data class Move(
-    override val entity: GameEntity<out BaseType>,
+    override val entity: GameEntity<out Creature>,
     val position: Position3D,
     override val context: GameContext) : GameMessage(entity, context)
