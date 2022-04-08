@@ -4,10 +4,7 @@ import model.entity.types.Player
 import view.views.play.resources.GameTiles
 import controller.messages.GameMessage
 import model.entity.attributes.*
-import model.entity.behaviors.AgressiveMove
-import model.entity.behaviors.Behavior
-import model.entity.behaviors.InputHandler
-import model.entity.behaviors.ScaryMove
+import model.entity.behaviors.*
 import model.entity.facets.Facet
 import model.entity.facets.Hitable
 import model.entity.facets.Movable
@@ -59,7 +56,7 @@ object EntityFactory {
     private fun createStandingMonster() = newGameEntityOfType(
         Monster,
         mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.STANDING_MONSTER), EntityLevel()),
-        mutableListOf(),
+        mutableListOf(StandingMove()),
         mutableListOf(Movable(), Hitable())
     )
 
