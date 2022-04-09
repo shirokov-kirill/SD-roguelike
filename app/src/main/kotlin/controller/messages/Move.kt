@@ -12,5 +12,5 @@ tells an entity it needs to move
 
 data class Move(
     override val entity: GameEntity<out Creature>,
-    val position: Position3D,
+    var position: Position3D,
     override val context: GameContext) : GameMessage(entity, context)

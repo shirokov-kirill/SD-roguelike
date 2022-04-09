@@ -30,7 +30,7 @@ class GameEngine(
     }
 
     private fun executeGameTurn() {
-        entities.filter { it.type is Creature } .filter { it.needsUpdate() && it.type != Player }.map { it.update(GameContext(this.world, null, null, this.player)) }
+        entities.filter { it.type is Creature } .filter { it.needsUpdate() }.map { it.update(GameContext(this.world, null, null, this.player)) }
         Controller.onGameSecondlyChange()
     }
 

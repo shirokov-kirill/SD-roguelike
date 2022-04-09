@@ -27,7 +27,7 @@ import view.views.play.resources.GameTiles
 
 /*
 PlayView implements main view of the game
-with Inventory, AdditionalInfo and Game Map
+with Inventory, AdditionalInfo, Game Map and Log
  */
 
 class PlayView(

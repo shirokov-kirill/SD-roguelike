@@ -1,6 +1,7 @@
 package model.entity.behaviors
 
 import controller.GameContext
+import controller.messages.GameMessage
 import controller.messages.Move
 import model.entity.GameEntity
 import model.entity.attributes.*
@@ -14,7 +15,7 @@ This is a Behavior class that provides
 entity with acting according to user Input
  */
 
-class InputHandler() : Behavior{
+class InputHandler() : BaseBehavior() {
 
     override fun update(entity: GameEntity<Creature>, context: GameContext): Boolean {
         val uiEvent = context.uiEvent
@@ -52,7 +53,7 @@ class InputHandler() : Behavior{
                     println()
                 }
             }
-            player.receiveMessage(Move(player, newPosition, context))
+            handleEffects(player, Move(player, newPosition, context))
         } else {
             //TODO add mouse behaviors if needed
         }

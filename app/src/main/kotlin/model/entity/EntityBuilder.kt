@@ -38,8 +38,8 @@ object EntityFactory {
 
     fun createPlayer() = newAliveGameEntityOfType(
         Player,
-        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.PLAYER), EntityLevel(), EntityInventory()),
-        mutableListOf(InputHandler()),
+        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.PLAYER), EntityLevel(), EntityInventory(), Effects()),
+        mutableListOf(InputHandler(), EffectsDecreaser()),
         mutableListOf(Movable(), ViewMover(), Hitable(), CanEquipInventoryItems(), CanTakeOffInventoryItems()))
 
     fun createMonster() = createMonsterWithProbability()
@@ -57,22 +57,22 @@ object EntityFactory {
 
     private fun createScaredMonster() = newAliveGameEntityOfType(
         Monster,
-        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.SCARED_MONSTER), EntityLevel(), EntityInventory()),
-        mutableListOf(ScaryMove()),
+        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.SCARED_MONSTER), EntityLevel(), EntityInventory(), Effects()),
+        mutableListOf(ScaryMove(), EffectsDecreaser()),
         mutableListOf(Movable(), Hitable())
     )
 
     private fun createStandingMonster() = newAliveGameEntityOfType(
         Monster,
-        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.STANDING_MONSTER), EntityLevel(), EntityInventory()),
-        mutableListOf(StandingMove()),
+        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.STANDING_MONSTER), EntityLevel(), EntityInventory(), Effects()),
+        mutableListOf(StandingMove(), EffectsDecreaser()),
         mutableListOf(Movable(), Hitable())
     )
 
     private fun createAgressiveMonster() = newAliveGameEntityOfType(
         Monster,
-        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.AGRESSIVE_MONSTER), EntityLevel(), EntityInventory()),
-        mutableListOf(AgressiveMove()),
+        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.AGRESSIVE_MONSTER), EntityLevel(), EntityInventory(), Effects()),
+        mutableListOf(AgressiveMove(), EffectsDecreaser()),
         mutableListOf(Movable(), Hitable())
     )
 

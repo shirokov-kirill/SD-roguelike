@@ -9,7 +9,7 @@ import model.entity.types.Creature
 import model.entity.types.Monster
 import org.hexworks.zircon.api.data.Position3D
 
-class AgressiveMove: Behavior {
+class AgressiveMove: MonsterMove() {
 
     override fun update(entity: GameEntity<Creature>, context: GameContext): Boolean {
         val player = context.player
@@ -50,7 +50,7 @@ class AgressiveMove: Behavior {
                 }
             }
         }
-        entity.receiveMessage(Move(entity, newPosition, context))
+        handleEffects(entity, Move(entity, newPosition, context))
         return true
     }
 
