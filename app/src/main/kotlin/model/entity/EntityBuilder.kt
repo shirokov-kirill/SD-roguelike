@@ -9,6 +9,7 @@ import model.entity.facets.Hitable
 import model.entity.facets.Movable
 import model.entity.facets.ViewMover
 import model.entity.types.*
+import java.lang.Math.floor
 
 /*
 EntityFactory is a factory which
@@ -95,21 +96,21 @@ object EntityFactory {
 
     private fun createHeadEquipment() = newEquipmentOfType(
         HeadEquipment,
-        mutableListOf(EntityPosition(), EntityTile(GameTiles.DROPPED_EQUIPMENT), InventoryItemChars()),
+        mutableListOf(EntityPosition(), EntityTile(GameTiles.DROPPED_EQUIPMENT), InventoryItemChars(initialName = HEAD_EQUIPMENT[floor(Math.random() * (HEAD_EQUIPMENT.size - 1)).toInt()])),
     )
 
     private fun createBodyEquipment() = newEquipmentOfType(
         BodyEquipment,
-        mutableListOf(EntityPosition(), EntityTile(GameTiles.DROPPED_EQUIPMENT), InventoryItemChars())
+        mutableListOf(EntityPosition(), EntityTile(GameTiles.DROPPED_EQUIPMENT), InventoryItemChars(initialName = BODY_EQUIPMENT[floor(Math.random() * (BODY_EQUIPMENT.size - 1)).toInt()]))
     )
 
     private fun createHandEquipment() = newEquipmentOfType(
         HandEquipment,
-        mutableListOf(EntityPosition(), EntityTile(GameTiles.DROPPED_EQUIPMENT), InventoryItemChars())
+        mutableListOf(EntityPosition(), EntityTile(GameTiles.DROPPED_EQUIPMENT), InventoryItemChars(initialName = HAND_EQUIPMENT[floor(Math.random() * (HAND_EQUIPMENT.size - 1)).toInt()]))
     )
 
     private fun createLegEquipment() = newEquipmentOfType(
         LegEquipment,
-        mutableListOf(EntityPosition(), EntityTile(GameTiles.DROPPED_EQUIPMENT), InventoryItemChars())
+        mutableListOf(EntityPosition(), EntityTile(GameTiles.DROPPED_EQUIPMENT), InventoryItemChars(initialName = LEG_EQUIPMENT[floor(Math.random() * (LEG_EQUIPMENT.size - 1)).toInt()]))
     )
 }

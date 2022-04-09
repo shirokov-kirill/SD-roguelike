@@ -48,10 +48,15 @@ class Controller {
                 KeyCode.KEY_S -> interpret(InterfaceCommands.GO_BOTTOM, input, screen)
                 KeyCode.KEY_D -> interpret(InterfaceCommands.GO_RIGHT, input, screen)
                 KeyCode.SPACE -> interpret(InterfaceCommands.HIT, input, screen)
+                KeyCode.KEY_I -> toggleInventory()
                 else -> {
                     print(input.key)
                 }
             }
+        }
+
+        fun toggleInventory() {
+            isActive = !isActive
         }
 
         fun onGameSecondlyChange() {

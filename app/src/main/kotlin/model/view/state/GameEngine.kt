@@ -23,10 +23,8 @@ class GameEngine(
             while(true) {
                 if(Controller.isActive){
                     executeGameTurn()
-                    delay(1000L)
-                } else {
-                    delay(100L)
                 }
+                delay(1000L)
             }
         }
     }
