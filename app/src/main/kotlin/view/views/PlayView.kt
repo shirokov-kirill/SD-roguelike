@@ -34,11 +34,47 @@ class PlayView(
     private val grid: TileGrid,
     private val game: Game,
     private val additionalInfo: AdditionalInfo,
+    private val withInventory: Boolean,
     theme: ColorTheme = GameConfig.THEME
 ) : BaseView(grid, theme) {
-    init {
 
-        var inventoryOpened = false
+    private var inventoryOpened: Boolean = false
+
+    private fun openInventory() {
+        Controller.onInventoryOpen()
+        val panel = Components.panel()
+            .withSize(DIALOG_SIZE)
+            .withDecorations(box(title = "Inventory"), shadow())
+            .build()
+
+        val fragment = InventoryFragment(game.getPlayer(), DIALOG_SIZE.width - 3,
+            {entity -> Controller.performEquipItemAction(entity)},
+            {entity -> Controller.performTakeOffItemAction(entity)})
+
+        panel.addFragment(fragment)
+
+        val modal = ModalBuilder.newBuilder<EmptyModalResult>()
+            .withParentSize(screen.size)
+            .withComponent(panel)
+            .withCenteredDialog(true)
+            .build()
+
+        panel.addComponent(Components.button()
+            .withText("Close")
+            .withAlignmentWithin(panel, ComponentAlignment.BOTTOM_LEFT)
+            .build().apply {
+                onActivated {
+                    modal.close(EmptyModalResult)
+                    Controller.onInventoryClose()
+                    Processed
+                }
+            })
+
+        modal.theme = GameConfig.THEME
+        screen.openModal(modal)
+    }
+
+    init {
 
         val world = game.getWorld()
 
@@ -48,7 +84,7 @@ class PlayView(
             .build()
 
         val logArea = Components.logArea()
-            .withDecorations(box(title = "Inventory"))
+            .withDecorations(box(title = "Log"))
             .withSize(GameConfig.WINDOW_WIDTH - GameConfig.SIDEBAR_WIDTH, GameConfig.INVENTORY_AREA_HEIGHT)
             .withAlignmentWithin(screen, ComponentAlignment.BOTTOM_RIGHT)
             .build()
@@ -77,43 +113,17 @@ class PlayView(
         screen.handleKeyboardEvents(KeyboardEventType.KEY_PRESSED) { event, _ ->
             if(event.code == KeyCode.KEY_I){
                 if(!inventoryOpened) {
+                    openInventory()
                     inventoryOpened = true
-                    Controller.toggleInventory()
-                    val panel = Components.panel()
-                        .withSize(DIALOG_SIZE)
-                        .withDecorations(box(title = "Inventory"), shadow())
-                        .build()
-
-                    val fragment = InventoryFragment(game.getPlayer(), DIALOG_SIZE.width - 3,
-                        {entity -> println() },//Controller.performEquipItemAction(entity)},
-                        {entity -> println()})//Controller.performTakeOffItemAction(entity)})
-
-                    panel.addFragment(fragment)
-
-                    val modal = ModalBuilder.newBuilder<EmptyModalResult>()
-                        .withParentSize(screen.size)
-                        .withComponent(panel)
-                        .withCenteredDialog(true)
-                        .build()
-
-                    panel.addComponent(Components.button()
-                        .withText("Close")
-                        .withAlignmentWithin(panel, ComponentAlignment.BOTTOM_LEFT)
-                        .build().apply {
-                            onActivated {
-                                modal.close(EmptyModalResult)
-                                Controller.toggleInventory()
-                                Processed
-                            }
-                        })
-
-                    modal.theme = GameConfig.THEME
-                    screen.openModal(modal)
                 }
                 return@handleKeyboardEvents Processed
             }
             Controller.throwKeyboardInput(event, screen)
             Processed
+        }
+
+        if(withInventory) {
+            openInventory()
         }
     }
 }

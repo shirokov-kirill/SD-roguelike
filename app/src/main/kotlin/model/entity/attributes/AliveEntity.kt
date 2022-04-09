@@ -1,5 +1,7 @@
 package model.entity.attributes
 
+import controller.messages.EquipItem
+import model.entity.EntityFactory
 import model.entity.GameEntity
 import model.entity.types.*
 import org.hexworks.zircon.api.data.Position3D
@@ -51,37 +53,52 @@ fun AliveEntity.updateStats(){
     }
 }
 
-fun AliveEntity.addItemToInventory(item: GameEntity<Equipment>) {
+fun AliveEntity.equipItem(item: GameEntity<Equipment>): Boolean{
     val equippedItems = this.equippedItems
-    this.inventory = this.inventory.add(item)
-    when(item.type) {
-        HeadEquipment -> {
-            if(equippedItems[0].type is DefaultEquipment) {
+    if(this.inventory.contains(item)) {
+        when(item.type) {
+            HeadEquipment -> {
                 this.equippedItems = equippedItems.set(0, item)
             }
-        }
-        BodyEquipment -> {
-            if(equippedItems[1].type is DefaultEquipment) {
-                findAttribute(EntityInventory::class).map {
-                    this.equippedItems = equippedItems.set(1, item)
-                }
+            BodyEquipment -> {
+                this.equippedItems = equippedItems.set(1, item)
+            }
+            LegEquipment -> {
+                this.equippedItems = equippedItems.set(2, item)
+            }
+            HandEquipment -> {
+                this.equippedItems = equippedItems.set(3, item)
             }
         }
-        LegEquipment -> {
-            if(equippedItems[2].type is DefaultEquipment) {
-                findAttribute(EntityInventory::class).map {
-                    this.equippedItems = equippedItems.set(2, item)
-                }
-            }
-        }
-        HandEquipment -> {
-            if(equippedItems[3].type is DefaultEquipment) {
-                findAttribute(EntityInventory::class).map {
-                    it.equippedItems = equippedItems.set(3, item)
-                }
-            }
-        }
+        return true
     }
+    return false
+}
+
+fun AliveEntity.takeOffItem(item: GameEntity<Equipment>): Boolean{
+    val equippedItems = this.equippedItems
+    if(this.equippedItems.contains(item)) {
+        when(item.type) {
+            HeadEquipment -> {
+                this.equippedItems = equippedItems.set(0, EntityFactory.getDefaultEquipment())
+            }
+            BodyEquipment -> {
+                this.equippedItems = equippedItems.set(1, EntityFactory.getDefaultEquipment())
+            }
+            LegEquipment -> {
+                this.equippedItems = equippedItems.set(2, EntityFactory.getDefaultEquipment())
+            }
+            HandEquipment -> {
+                this.equippedItems = equippedItems.set(3, EntityFactory.getDefaultEquipment())
+            }
+        }
+        return true
+    }
+    return false
+}
+
+fun AliveEntity.addItemToInventory(item: GameEntity<Equipment>) {
+    this.inventory = this.inventory.add(item)
 }
 
 var AliveEntity.level

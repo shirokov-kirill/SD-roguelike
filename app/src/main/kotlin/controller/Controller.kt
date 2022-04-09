@@ -1,6 +1,8 @@
 package controller
 
 import model.StateModificationsHandler
+import model.entity.GameEntity
+import model.entity.types.Equipment
 import org.hexworks.zircon.api.screen.Screen
 import org.hexworks.zircon.api.uievent.KeyCode
 import org.hexworks.zircon.api.uievent.KeyboardEvent
@@ -36,6 +38,14 @@ class Controller {
             interpret(input)
         }
 
+        fun performEquipItemAction(entity: GameEntity<Equipment>) {
+            Viewer.render(InterfaceCommands.TO_INVENTORY, stateModificationsHandler?.performEquipItemAction(entity), stateModificationsHandler?.getAdditionalInfo())
+        }
+
+        fun performTakeOffItemAction(entity: GameEntity<Equipment>) {
+            Viewer.render(InterfaceCommands.TO_INVENTORY, stateModificationsHandler?.performTakeOffItemAction(entity), stateModificationsHandler?.getAdditionalInfo())
+        }
+
         /*
         throwKeyboardInput() method can be used to parse clicks on Keyboard from user
         to InterfaceCommands
@@ -48,15 +58,18 @@ class Controller {
                 KeyCode.KEY_S -> interpret(InterfaceCommands.GO_BOTTOM, input, screen)
                 KeyCode.KEY_D -> interpret(InterfaceCommands.GO_RIGHT, input, screen)
                 KeyCode.SPACE -> interpret(InterfaceCommands.HIT, input, screen)
-                KeyCode.KEY_I -> toggleInventory()
                 else -> {
                     print(input.key)
                 }
             }
         }
 
-        fun toggleInventory() {
-            isActive = !isActive
+        fun onInventoryOpen() {
+            isActive = false
+        }
+
+        fun onInventoryClose() {
+            isActive = true
         }
 
         fun onGameSecondlyChange() {

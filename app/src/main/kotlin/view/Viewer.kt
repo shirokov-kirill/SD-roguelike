@@ -32,7 +32,11 @@ class Viewer{
                 }
                 InterfaceCommands.TO_PLAY -> {
                     tileGrid.clear()
-                    PlayView(tileGrid, game!!, additionalInfo!!).dock()
+                    PlayView(tileGrid, game!!, additionalInfo!!, false).dock()
+                }
+                InterfaceCommands.TO_INVENTORY -> {
+                    tileGrid.clear()
+                    PlayView(tileGrid, game!!, additionalInfo!!, true).dock()
                 }
                 else -> {
                     return

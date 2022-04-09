@@ -4,10 +4,7 @@ import view.views.play.resources.GameTiles
 import controller.messages.GameMessage
 import model.entity.attributes.*
 import model.entity.behaviors.*
-import model.entity.facets.Facet
-import model.entity.facets.Hitable
-import model.entity.facets.Movable
-import model.entity.facets.ViewMover
+import model.entity.facets.*
 import model.entity.types.*
 import java.lang.Math.floor
 
@@ -43,7 +40,7 @@ object EntityFactory {
         Player,
         mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.PLAYER), EntityLevel(), EntityInventory()),
         mutableListOf(InputHandler()),
-        mutableListOf(Movable(), ViewMover(), Hitable()))
+        mutableListOf(Movable(), ViewMover(), Hitable(), CanEquipInventoryItems(), CanTakeOffInventoryItems()))
 
     fun createMonster() = createMonsterWithProbability()
 
