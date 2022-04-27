@@ -10,27 +10,21 @@ class GameWorldBuilderTest {
     private val gameWorldBuilder = GameWorldBuilder(GameConfig.WORLD_SIZE)
 
     @Test
-    fun createNullableGameWorldMapTest(){
-        val modHandler = gameWorldBuilder.passLoadingType(GameWorldBuilder.GENERATE, "").build(GameConfig.GAME_AREA_SIZE)
-        assertEquals(false, modHandler.hasBlockAt(Position3D.create(0, 0, 0)))
-    }
-
-    @Test
     fun  createNotNullableGameWorldMapTest(){
-        val modHandler = gameWorldBuilder.passLoadingType(GameWorldBuilder.GENERATE, "").proceed().build(GameConfig.GAME_AREA_SIZE)
-        assertEquals(true, modHandler.hasBlockAt(Position3D.create(0, 0, 0)))
+        val (worldMap, player) = gameWorldBuilder.passLoadingType(GameWorldBuilder.GENERATE).build(GameConfig.GAME_AREA_SIZE)
+        assertEquals(true, worldMap.hasBlockAt(Position3D.create(0, 0, 0)))
     }
 
     @Test
     fun  generateGameWorldMapTest(){
-        val modHandler = gameWorldBuilder.passLoadingType(GameWorldBuilder.GENERATE, "").proceed().build(GameConfig.GAME_AREA_SIZE)
-        assertEquals(true, modHandler.hasBlockAt(Position3D.create(0, 0, 0)))
+        val (worldMap, player) = gameWorldBuilder.passLoadingType(GameWorldBuilder.GENERATE).build(GameConfig.GAME_AREA_SIZE)
+        assertEquals(true, worldMap.hasBlockAt(Position3D.create(0, 0, 0)))
     }
 
     @Test
     fun  loadNotImplementedErrorGameWorldMapTest(){
         try{
-            val modHandler = gameWorldBuilder.passLoadingType(GameWorldBuilder.LOAD, "").proceed().build(GameConfig.GAME_AREA_SIZE)
+            val (worldMap, player) = gameWorldBuilder.passLoadingType(GameWorldBuilder.LOAD).build(GameConfig.GAME_AREA_SIZE)
             assert(false)
         } catch (e: NotImplementedError){
             return
