@@ -14,4 +14,8 @@ class EntityDirection(
     private val directionProperty = initialDirection.toProperty()
 
     var direction: Directions by directionProperty.asDelegate()
+
+    override fun clone(): Attribute {
+        return EntityDirection(direction)
+    }
 }

@@ -1,6 +1,8 @@
 package model.entity
 
+import com.google.gson.Gson
 import controller.GameContext
+import controller.messages.Clone
 import controller.messages.GameMessage
 import controller.messages.Pass
 import controller.messages.Response
@@ -10,6 +12,7 @@ import model.entity.facets.Facet
 import model.entity.types.BaseType
 import model.entity.types.Creature
 import org.hexworks.cobalt.datatypes.Maybe
+import org.hexworks.zircon.api.behavior.Copiable
 import kotlin.reflect.KClass
 
 /*
@@ -83,4 +86,8 @@ open class GameEntity<T: BaseType>(
         return false
     }
 
+    fun deepCopy(): GameEntity<T> {
+        val attributesCopy = attributes.map { attribute -> attribute.clone() }.toMutableList()
+        return GameEntity(type, attributesCopy, behaviors, facets)
+    }
 }

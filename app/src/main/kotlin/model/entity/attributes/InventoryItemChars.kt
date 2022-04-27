@@ -28,4 +28,7 @@ class InventoryItemChars(damageBuff: Int? = null, healthBuff: Int? = null, initi
     var hitPointsBuff: Int by hitPointsBuffProperty.asDelegate()
     val name: String by nameProperty.asDelegate()
 
+    override fun clone(): Attribute {
+        return InventoryItemChars(0, 0, "default")
+    }
 }

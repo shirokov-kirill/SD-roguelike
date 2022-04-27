@@ -1,7 +1,9 @@
 package controller
 
 import model.StateModificationsHandler
-import model.entity.EntityFactory
+import model.entity.factory.AncientMobsFactory
+import model.entity.factory.CorruptedMobsFactory
+import model.entity.factory.EquipmentFactory
 import model.state.AdditionalInfo
 import model.view.state.Game
 
@@ -24,36 +26,13 @@ class Initializer {
             filePath: String = "",
             difficulty: Difficulty
         ): StateModificationsHandler {
-            val gameWorld = GameWorldBuilder(GameConfig.WORLD_SIZE)
-                .passLoadingType(type, filePath)
-                .proceed()
+            val (gameWorld, player) = GameWorldBuilder(GameConfig.WORLD_SIZE)
+                .passLoadingType(type)
+                .passFilePath(filePath)
+                .passDifficulty(difficulty)
+                .withMobsFactory(CorruptedMobsFactory())
+                .withEquipmentFactory(EquipmentFactory())
                 .build(GameConfig.GAME_AREA_SIZE)
-
-            val player = EntityFactory.createPlayer()
-
-            gameWorld.addEntity(player, true)
-
-            var monstersCount = 0
-            when(difficulty){
-                Difficulty.EASY -> monstersCount = 10
-                Difficulty.MEDIUM -> monstersCount = 15
-                Difficulty.HARD -> monstersCount = 20
-                Difficulty.EXTREME -> monstersCount = 35
-            }
-
-            var equipmentCount = 15
-
-            while (monstersCount > 0) {
-                val monster = EntityFactory.createMonster()
-                gameWorld.addEntity(monster, true, GameConfig.WORLD_SIZE)
-                monstersCount--
-            }
-
-            while (equipmentCount > 0) {
-                val equipment = EntityFactory.createEqiupment()
-                gameWorld.addEntity(equipment, true, GameConfig.WORLD_SIZE)
-                equipmentCount--
-            }
 
             val game = Game(
                 gameWorld,

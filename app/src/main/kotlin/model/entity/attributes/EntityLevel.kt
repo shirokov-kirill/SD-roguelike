@@ -20,4 +20,8 @@ class EntityLevel(initialLevel: Int = 1, initialExperience: Int = 0): Attribute 
 
     var damage: Int by damageProperty.asDelegate()
 
+    override fun clone(): Attribute {
+        return EntityLevel(level, expirience)
+    }
+
 }

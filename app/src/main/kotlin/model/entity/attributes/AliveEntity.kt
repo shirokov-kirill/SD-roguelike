@@ -1,9 +1,8 @@
 package model.entity.attributes
 
-import controller.messages.EquipItem
-import model.entity.EntityFactory
 import model.entity.GameEntity
 import model.entity.attributes.effects.Effect
+import model.entity.factory.EquipmentFactory
 import model.entity.types.*
 import org.hexworks.zircon.api.data.Position3D
 import kotlin.reflect.KClass
@@ -82,16 +81,16 @@ fun AliveEntity.takeOffItem(item: GameEntity<Equipment>): Boolean{
     if(this.equippedItems.contains(item)) {
         when(item.type) {
             HeadEquipment -> {
-                this.equippedItems = equippedItems.set(0, EntityFactory.getDefaultEquipment())
+                this.equippedItems = equippedItems.set(0, EquipmentFactory().getDefault())
             }
             BodyEquipment -> {
-                this.equippedItems = equippedItems.set(1, EntityFactory.getDefaultEquipment())
+                this.equippedItems = equippedItems.set(1, EquipmentFactory().getDefault())
             }
             LegEquipment -> {
-                this.equippedItems = equippedItems.set(2, EntityFactory.getDefaultEquipment())
+                this.equippedItems = equippedItems.set(2, EquipmentFactory().getDefault())
             }
             HandEquipment -> {
-                this.equippedItems = equippedItems.set(3, EntityFactory.getDefaultEquipment())
+                this.equippedItems = equippedItems.set(3, EquipmentFactory().getDefault())
             }
         }
         return true
@@ -128,7 +127,7 @@ fun AliveEntity.recalculateEffects() {
     val effectsToRemove = mutableListOf<Effect>()
     for (appliedEffect in effects) {
         appliedEffect.duration -= 1
-        if(appliedEffect.duration <= 0){
+        if(appliedEffect.duration == 0){
             effectsToRemove.add(appliedEffect)
         }
     }

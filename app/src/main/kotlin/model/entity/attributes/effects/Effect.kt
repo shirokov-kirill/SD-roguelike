@@ -4,4 +4,6 @@ interface Effect {
 
     var duration: Int
 
+    fun clone(): Effect
+
 }

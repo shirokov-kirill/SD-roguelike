@@ -6,10 +6,10 @@ import view.views.play.resources.GameTiles.EMPTY
 import view.views.play.resources.GameTiles.FLOOR
 import view.views.play.resources.GameTiles.WALL
 import kotlinx.collections.immutable.persistentMapOf
-import model.entity.EntityFactory
 import model.entity.GameEntity
 import model.entity.attributes.damage
 import model.entity.attributes.tile
+import model.entity.factory.EntityFactory
 import model.entity.types.*
 import org.hexworks.zircon.api.data.BlockTileType
 import org.hexworks.zircon.api.data.Tile

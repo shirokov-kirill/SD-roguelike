@@ -12,4 +12,8 @@ class Effects(
 
     var effects: PersistentList<Effect> by effectsProperty.asDelegate()
 
+    override fun clone(): Attribute {
+        return Effects(effects.map { effect: Effect -> effect.clone() }.toMutableList())
+    }
+
 }

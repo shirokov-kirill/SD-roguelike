@@ -1,10 +1,12 @@
 package model.entity.behaviors
 
+import controller.messages.Clone
 import controller.messages.GameMessage
 import controller.messages.Move
 import controller.sameLevelNeighborsShuffled
 import model.entity.GameEntity
 import model.entity.attributes.effects
+import model.entity.attributes.effects.Clonable
 import model.entity.attributes.effects.Embarrassment
 import model.entity.attributes.position
 import model.entity.types.Creature
@@ -19,6 +21,18 @@ abstract class BaseBehavior: Behavior {
                     message.position = entity.position.sameLevelNeighborsShuffled().first()
                     entity.receiveMessage(message)
                     return
+                } else {
+                    if(effect is Clonable){
+                        var needToClone = false
+                        if(effect.capacity == effect.actual + 1){
+                            needToClone = true
+                        }
+                        effect.updateValue()
+                        if(needToClone){
+                            entity.receiveMessage(Clone(message.entity, message.context))
+                            entity.receiveMessage(message)
+                        }
+                    }
                 }
             }
         }
