@@ -3,10 +3,7 @@ package model.entity.factory
 import model.entity.GameEntity
 import model.entity.attributes.*
 import model.entity.attributes.effects.Clonable
-import model.entity.behaviors.AgressiveMove
-import model.entity.behaviors.EffectsDecreaser
-import model.entity.behaviors.ScaryMove
-import model.entity.behaviors.StandingMove
+import model.entity.behaviors.*
 import model.entity.facets.Hitable
 import model.entity.facets.Movable
 import model.entity.types.BaseType
@@ -24,12 +21,14 @@ class AncientMobsFactory: MobsFactory() {
     private fun createMonsterWithProbability(): GameEntity<Monster> {
         val res = Math.random()
         var monster: GameEntity<Monster>? = null
-        if(res < 0.33){
+        if(res < 0.25){
             monster = createAgressiveAncient()
-        } else if(res < 0.66){
+        } else if(res < 0.5){
             monster = createScaredAncient()
-        } else {
+        } else if(res < 0.75){
             monster = createStandingAncient()
+        } else {
+            monster = createMutableGoingAncient()
         }
         if(Math.random() > 0.8){
             monster.applyEffect(Clonable(25))
@@ -55,6 +54,13 @@ class AncientMobsFactory: MobsFactory() {
         Monster,
         mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.AGRESSIVE_ANCIENT), EntityLevel(), EntityInventory(), Effects()),
         mutableListOf(AgressiveMove(), EffectsDecreaser()),
+        mutableListOf(Movable(), Hitable())
+    )
+
+    private fun createMutableGoingAncient() = newAliveGameEntityOfType(
+        Monster,
+        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.AGRESSIVE_ANCIENT), EntityLevel(), EntityInventory(), Effects()),
+        mutableListOf(MutableBehavior(), EffectsDecreaser()),
         mutableListOf(Movable(), Hitable())
     )
 

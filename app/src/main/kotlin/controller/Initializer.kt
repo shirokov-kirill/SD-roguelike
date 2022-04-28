@@ -30,7 +30,7 @@ class Initializer {
                 .passLoadingType(type)
                 .passFilePath(filePath)
                 .passDifficulty(difficulty)
-                .withMobsFactory(CorruptedMobsFactory())
+                .withMobsFactory(AncientMobsFactory())
                 .withEquipmentFactory(EquipmentFactory())
                 .build(GameConfig.GAME_AREA_SIZE)
 

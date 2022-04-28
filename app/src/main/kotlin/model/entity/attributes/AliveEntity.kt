@@ -245,6 +245,9 @@ var AliveEntity.hitPoints
         }
     }
 
+val AliveEntity.maxHitPoints
+    get() = LEVEL_EXPERIENCE_TABLE[this.level][1]
+
 private fun AliveEntity.calculateTotalDamage(): Int {
     val baseDamage = tryToFindAttribute(EntityLevel::class).damage
     var additionalDamage = 0
