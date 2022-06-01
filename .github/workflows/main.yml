@@ -18,6 +18,10 @@ jobs:
                   java-version: 11
             - name: Go to execution Directory
               run: cd app/
+            - name: Print current dirrectory
+              run: pwd
+            - name: Ls in current dirrectory
+              run: ls -a
             - name: Grant execute permission for gradlew
               run: chmod +x gradlew
             - name: Build with Gradle
