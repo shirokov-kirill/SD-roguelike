@@ -22,3 +22,6 @@ jobs:
       - name: Build with Gradle
         working-directory: ./app
         run: ./gradlew build
+      - name: Run tests with Gradle
+        working-directory: ./app
+        run: ./gradlew test
