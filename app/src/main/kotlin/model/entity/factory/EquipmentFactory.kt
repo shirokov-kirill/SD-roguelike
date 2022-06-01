@@ -6,7 +6,7 @@ import model.entity.attributes.EntityTile
 import model.entity.attributes.InventoryItemChars
 import model.entity.types.*
 import view.views.play.resources.GameTiles
-import javax.swing.text.html.parser.Entity
+import kotlin.math.floor
 
 class EquipmentFactory : EntityFactory() {
 
@@ -17,14 +17,14 @@ class EquipmentFactory : EntityFactory() {
 
     private fun createEquipmentWithProbability(): GameEntity<out Equipment> {
         val res = Math.random()
-        if (res < 0.25) {
-            return createHeadEquipment()
+        return if (res < 0.25) {
+            createHeadEquipment()
         } else if (res < 0.5) {
-            return createBodyEquipment()
+            createBodyEquipment()
         } else if (res < 0.75) {
-            return createHandEquipment()
+            createHandEquipment()
         } else {
-            return createLegEquipment()
+            createLegEquipment()
         }
     }
 
@@ -32,7 +32,7 @@ class EquipmentFactory : EntityFactory() {
         HeadEquipment,
         mutableListOf(
             EntityPosition(), EntityTile(GameTiles.DROPPED_EQUIPMENT), InventoryItemChars(
-                initialName = HEAD_EQUIPMENT[Math.floor(Math.random() * (HEAD_EQUIPMENT.size - 1))
+                initialName = HEAD_EQUIPMENT[floor(Math.random() * (HEAD_EQUIPMENT.size - 1))
                     .toInt()]
             )
         ),
@@ -42,7 +42,7 @@ class EquipmentFactory : EntityFactory() {
         BodyEquipment,
         mutableListOf(
             EntityPosition(), EntityTile(GameTiles.DROPPED_EQUIPMENT), InventoryItemChars(
-                initialName = BODY_EQUIPMENT[Math.floor(Math.random() * (BODY_EQUIPMENT.size - 1))
+                initialName = BODY_EQUIPMENT[floor(Math.random() * (BODY_EQUIPMENT.size - 1))
                     .toInt()]
             )
         )
@@ -52,7 +52,7 @@ class EquipmentFactory : EntityFactory() {
         HandEquipment,
         mutableListOf(
             EntityPosition(), EntityTile(GameTiles.DROPPED_EQUIPMENT), InventoryItemChars(
-                initialName = HAND_EQUIPMENT[Math.floor(Math.random() * (HAND_EQUIPMENT.size - 1))
+                initialName = HAND_EQUIPMENT[floor(Math.random() * (HAND_EQUIPMENT.size - 1))
                     .toInt()]
             )
         )
@@ -62,7 +62,7 @@ class EquipmentFactory : EntityFactory() {
         LegEquipment,
         mutableListOf(
             EntityPosition(), EntityTile(GameTiles.DROPPED_EQUIPMENT), InventoryItemChars(
-                initialName = LEG_EQUIPMENT[Math.floor(Math.random() * (LEG_EQUIPMENT.size - 1))
+                initialName = LEG_EQUIPMENT[floor(Math.random() * (LEG_EQUIPMENT.size - 1))
                     .toInt()]
             )
         )

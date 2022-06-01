@@ -3,7 +3,6 @@ package model.view.state
 import controller.GameContext
 import model.entity.GameEntity
 import model.entity.attributes.addItemToInventory
-import model.entity.attributes.inventory
 import model.entity.attributes.position
 import model.entity.types.BaseType
 import model.entity.types.Creature
@@ -28,7 +27,7 @@ class GameWorld(
     .withActualSize(actualSize)
     .build() {
 
-    val engine = GameEngine(this)
+    private val engine = GameEngine(this)
 
     init {
         blocks.forEach { (pos, block) ->
@@ -91,11 +90,10 @@ class GameWorld(
     }
 
     fun addEntity(entity: GameEntity<out BaseType>, withGuarantee: Boolean, mapSize: Size3D = visibleSize): Boolean {
-        var attemptsCount: Int
-        if (withGuarantee) {
-            attemptsCount = -1
+        var attemptsCount: Int = if (withGuarantee) {
+            -1
         } else {
-            attemptsCount = 4
+            4
         }
         var res = Maybe.empty<Boolean>()
         var position: Position3D = Position3D.unknown()

@@ -1,10 +1,8 @@
 package view.views
 
+import GameConfig
 import GameConfig.DIALOG_SIZE
 import controller.Controller
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import model.state.AdditionalInfo
 import model.view.state.Game
 import org.hexworks.cobalt.databinding.api.extension.toProperty
@@ -22,7 +20,6 @@ import org.hexworks.zircon.api.uievent.Processed
 import org.hexworks.zircon.api.view.base.BaseView
 import org.hexworks.zircon.internal.component.modal.EmptyModalResult
 import org.hexworks.zircon.internal.game.impl.GameAreaComponentRenderer
-import view.InterfaceCommands
 import view.views.play.resources.GameTiles
 
 /*
@@ -31,10 +28,10 @@ with Inventory, AdditionalInfo, Game Map and Log
  */
 
 class PlayView(
-    private val grid: TileGrid,
+    grid: TileGrid,
     private val game: Game,
-    private val additionalInfo: AdditionalInfo,
-    private val withInventory: Boolean,
+    additionalInfo: AdditionalInfo,
+    withInventory: Boolean,
     theme: ColorTheme = GameConfig.THEME
 ) : BaseView(grid, theme) {
 

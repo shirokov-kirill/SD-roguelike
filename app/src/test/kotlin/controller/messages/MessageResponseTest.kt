@@ -2,26 +2,27 @@ package controller.messages
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 class MessageResponseTest {
 
     @Test
     fun testUnequalPassConsumed() {
-        assertEquals(false, Pass.equals(Consumed))
+        assertNotEquals<Response>(Consumed, Pass)
     }
 
     @Test
     fun testUnequalConsumedPass() {
-        assertEquals(false, Consumed.equals(Pass))
+        assertNotEquals<Response>(Pass, Consumed)
     }
 
     @Test
     fun testEqualConsumedConsumed() {
-        assertEquals(true, Consumed.equals(Consumed))
+        assertEquals(Consumed, Consumed)
     }
 
     @Test
     fun testEqualPassPass() {
-        assertEquals(true, Pass.equals(Pass))
+        assertEquals(Pass, Pass)
     }
 }

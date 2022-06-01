@@ -15,10 +15,10 @@ abstract class BaseFacet<P : GameMessage>(
 
     @Suppress("UNCHECKED_CAST")
     override fun tryReceive(message: GameMessage): Response {
-        if (message::class == messageType) {
-            return receive(message as P)
+        return if (message::class == messageType) {
+            receive(message as P)
         } else {
-            return Pass
+            Pass
         }
     }
 

@@ -1,8 +1,6 @@
 package model.entity
 
-import com.google.gson.Gson
 import controller.GameContext
-import controller.messages.Clone
 import controller.messages.GameMessage
 import controller.messages.Pass
 import controller.messages.Response
@@ -12,7 +10,6 @@ import model.entity.facets.Facet
 import model.entity.types.BaseType
 import model.entity.types.Creature
 import org.hexworks.cobalt.datatypes.Maybe
-import org.hexworks.zircon.api.behavior.Copiable
 import kotlin.reflect.KClass
 
 /*
@@ -53,9 +50,8 @@ open class GameEntity<T : BaseType>(
         if (isCreature()) {
             var response: Response = Pass
             for (facet in facets) {
-                var lastCommand = message
                 if (response == Pass) {
-                    response = facet.tryReceive(lastCommand)
+                    response = facet.tryReceive(message)
                 }
             }
             return response

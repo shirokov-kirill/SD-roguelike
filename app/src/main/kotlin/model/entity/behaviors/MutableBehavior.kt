@@ -8,20 +8,20 @@ import model.entity.types.Creature
 
 class MutableBehavior : BaseBehavior() {
 
-    private var behavior: MonsterMove = AgressiveMove()
+    private var behavior: MonsterMove = AggressiveMove()
 
     private val requireForAggressive = 0.80
     private val disorientedBefore = 0.10
 
     override fun update(entity: GameEntity<Creature>, context: GameContext): Boolean {
-        if (entity.hitPoints >= entity.maxHitPoints * requireForAggressive) {
-            behavior = AgressiveMove()
+        behavior = if (entity.hitPoints >= entity.maxHitPoints * requireForAggressive) {
+            AggressiveMove()
         } else if (entity.hitPoints < entity.maxHitPoints * requireForAggressive &&
             entity.hitPoints >= entity.maxHitPoints * disorientedBefore
         ) {
-            behavior = ScaryMove()
+            ScaryMove()
         } else {
-            behavior = StandingMove()
+            StandingMove()
         }
         return behavior.update(entity, context)
     }

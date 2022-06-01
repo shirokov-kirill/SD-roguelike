@@ -1,8 +1,6 @@
 package model.entity.attributes.effects
 
-import model.entity.facets.Cloneable
-
-class Clonable(var capacity: Int, override var duration: Int = -1) : Effect {
+class Cloneable(var capacity: Int, override var duration: Int = -1) : Effect {
 
     var actual = 0
 
@@ -11,7 +9,7 @@ class Clonable(var capacity: Int, override var duration: Int = -1) : Effect {
     }
 
     override fun clone(): Effect {
-        return Clonable(capacity)
+        return Cloneable(capacity)
     }
 
 }

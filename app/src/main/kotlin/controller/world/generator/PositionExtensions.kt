@@ -1,4 +1,4 @@
-package controller
+package controller.world.generator
 
 import org.hexworks.zircon.api.data.Position3D
 

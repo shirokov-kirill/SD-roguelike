@@ -1,5 +1,3 @@
 package model.entity.types
 
-object HeadEquipment : Equipment("head") {
-
-}
+object HeadEquipment : Equipment("head")

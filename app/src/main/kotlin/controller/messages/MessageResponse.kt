@@ -5,9 +5,7 @@ Response is the base interface
 for all kinds of Responses in the game
  */
 
-interface Response {
-
-}
+interface Response
 
 /*
 Consumed == "Positive" response

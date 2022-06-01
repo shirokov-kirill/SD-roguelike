@@ -9,7 +9,7 @@ Movable is a facet that symbolise
 that entity can move on the map
  */
 
-class Movable() : BaseFacet<Move>(Move::class) {
+class Movable : BaseFacet<Move>(Move::class) {
 
     override fun receive(message: Move): Response {
         val entity = message.entity
@@ -18,8 +18,8 @@ class Movable() : BaseFacet<Move>(Move::class) {
         val prevPosition = entity.position
         var result: Response = Pass
         if (world.moveEntity(entity, position)) {
-            if (entity.type == Player) {
-                result = MessageResponse(
+            result = if (entity.type == Player) {
+                MessageResponse(
                     MoveView(
                         message.context,
                         entity,
@@ -27,7 +27,7 @@ class Movable() : BaseFacet<Move>(Move::class) {
                     )
                 ).process()
             } else {
-                result = Consumed
+                Consumed
             }
         }
         return result

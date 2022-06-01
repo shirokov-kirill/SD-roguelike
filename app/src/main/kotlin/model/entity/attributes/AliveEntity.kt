@@ -31,18 +31,18 @@ targetPosition attribute
 
 fun AliveEntity.calculatePosition(): Position3D {
     val position = tryToFindAttribute(EntityPosition::class).position
-    when (tryToFindAttribute(EntityDirection::class).direction) {
+    return when (tryToFindAttribute(EntityDirection::class).direction) {
         Directions.LEFT -> {
-            return position.withRelativeX(-1)
+            position.withRelativeX(-1)
         }
         Directions.RIGHT -> {
-            return position.withRelativeX(1)
+            position.withRelativeX(1)
         }
         Directions.TOP -> {
-            return position.withRelativeY(-1)
+            position.withRelativeY(-1)
         }
         Directions.BOTTOM -> {
-            return position.withRelativeY(1)
+            position.withRelativeY(1)
         }
     }
 }
@@ -185,10 +185,10 @@ var AliveEntity.level
     }
 
 var AliveEntity.experience
-    get() = tryToFindAttribute(EntityLevel::class).expirience
+    get() = tryToFindAttribute(EntityLevel::class).experience
     set(value) {
         findAttribute(EntityLevel::class).map {
-            it.expirience = value
+            it.experience = value
         }
     }
 
@@ -209,7 +209,6 @@ fun AliveEntity.performHit(damage: Int, effects: Array<Effect>?) {
     for (item in equippedItems) {
         if (item.hitPointsBuff > damageLeft) {
             item.hitPointsBuff = item.hitPointsBuff - damageLeft
-            damageLeft = 0
             return
         }
         if (item.hitPointsBuff == damageLeft) {

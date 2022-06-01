@@ -7,7 +7,7 @@ import model.entity.attributes.*
 import model.entity.attributes.effects.Effect
 import model.entity.attributes.effects.Embarrassment
 
-class Hitable : BaseFacet<Hit>(Hit::class) {
+class Hittable : BaseFacet<Hit>(Hit::class) {
 
     fun generateEffects(): Array<Effect>? {
         if (Math.random() > 0.75) {

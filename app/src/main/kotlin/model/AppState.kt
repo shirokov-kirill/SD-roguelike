@@ -3,12 +3,10 @@ package model
 import controller.GameContext
 import controller.messages.EquipItem
 import controller.messages.TakeOffItem
-import kotlinx.coroutines.Job
 import model.entity.GameEntity
 import model.entity.types.Equipment
 import model.state.AdditionalInfo
 import model.view.state.Game
-import model.view.state.GameWorld
 import org.hexworks.zircon.api.screen.Screen
 import org.hexworks.zircon.api.uievent.UIEvent
 

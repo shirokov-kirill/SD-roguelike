@@ -1,3 +1,5 @@
+package view.views.play.resources
+
 import org.hexworks.zircon.api.color.TileColor
 
 /*
@@ -14,7 +16,7 @@ object GameWorldColors {
 
     val PLAYER_FOREGROUND = TileColor.fromString("#FFCD22")
     val SCARED_MONSTER_FOREGROUND = TileColor.fromString("#008000")
-    val AGRESSIVE_MONSTER_FOREGROUND = TileColor.fromString("#FF0000")
+    val AGGRESSIVE_MONSTER_FOREGROUND = TileColor.fromString("#FF0000")
     val STANDING_MONSTER_FOREGROUND = TileColor.fromString("#0000FF")
     val DROPPED_EQUIPMENT = TileColor.fromString("#FFFFFF")
 }

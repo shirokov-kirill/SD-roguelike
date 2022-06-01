@@ -1,6 +1,5 @@
 package controller.world.generator
 
-import controller.GameWorldBuilder
 import org.hexworks.zircon.api.data.Position3D
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals

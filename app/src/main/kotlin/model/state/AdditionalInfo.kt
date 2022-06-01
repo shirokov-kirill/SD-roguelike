@@ -12,7 +12,7 @@ and
 about whole game
  */
 
-class AdditionalInfo() {
+class AdditionalInfo {
     private var playerHitPoints: Int = 0
     private var playerDamage: Int = 0
     private var playerLevel: Int = 0

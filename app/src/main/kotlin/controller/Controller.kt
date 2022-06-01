@@ -1,5 +1,6 @@
 package controller
 
+import controller.world.generator.GameWorldBuilder
 import model.StateModificationsHandler
 import model.entity.GameEntity
 import model.entity.types.Equipment

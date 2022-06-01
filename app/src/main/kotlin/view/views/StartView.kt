@@ -14,7 +14,7 @@ start button and game title
  */
 
 class StartView(
-    private val grid: TileGrid
+    grid: TileGrid
 ) : BaseView(grid, GameConfig.THEME) {
     init {
         val msg = "Welcome to Dungeon Runners."

@@ -5,7 +5,6 @@ import model.entity.attributes.*
 import model.entity.behaviors.EffectsDecreaser
 import model.entity.behaviors.InputHandler
 import model.entity.facets.*
-import model.entity.types.BaseType
 import model.entity.types.Player
 import view.views.play.resources.GameTiles
 
@@ -26,6 +25,6 @@ class PlayerFactory : EntityFactory() {
             Effects()
         ),
         mutableListOf(InputHandler(), EffectsDecreaser()),
-        mutableListOf(Movable(), ViewMover(), Hitable(), CanEquipInventoryItems(), CanTakeOffInventoryItems())
+        mutableListOf(Movable(), ViewMover(), Hittable(), CanEquipInventoryItems(), CanTakeOffInventoryItems())
     )
 }

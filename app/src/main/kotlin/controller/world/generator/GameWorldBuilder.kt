@@ -1,10 +1,9 @@
-package controller
+package controller.world.generator
 
-import controller.world.generator.GameWorldToPlayerBinding
+import controller.Difficulty
 import model.entity.GameEntity
 import model.entity.factory.*
 import model.entity.types.Player
-import model.view.state.Game
 import model.view.state.resourses.GameBlock
 import org.hexworks.zircon.api.data.Position3D
 import org.hexworks.zircon.api.data.Size3D
@@ -83,11 +82,11 @@ class GameWorldBuilder(private val worldSize: Size3D) {
     private fun generateMobs(world: GameWorld) {
         if (loadingType == GENERATE) {
             var monstersCount = 0
-            when (difficulty) {
-                Difficulty.EASY -> monstersCount = 10
-                Difficulty.MEDIUM -> monstersCount = 15
-                Difficulty.HARD -> monstersCount = 20
-                Difficulty.EXTREME -> monstersCount = 35
+            monstersCount = when (difficulty) {
+                Difficulty.EASY -> 10
+                Difficulty.MEDIUM -> 15
+                Difficulty.HARD -> 20
+                Difficulty.EXTREME -> 35
             }
             while (monstersCount > 0) {
                 val monster = mobsFactory.createEntity()
@@ -132,7 +131,7 @@ class GameWorldBuilder(private val worldSize: Size3D) {
     private fun buildInternal(visibleSize: Size3D) = GameWorld(blocks, visibleSize, worldSize)
 
     fun build(visibleSize: Size3D): GameWorldToPlayerBinding {
-        var world = this.makeCaves().buildInternal(visibleSize)
+        val world = this.makeCaves().buildInternal(visibleSize)
         generateMobs(world)
         generateEquipment(world)
         generatePlayer(world)

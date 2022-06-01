@@ -1,5 +1,3 @@
 package model.entity.types
 
-object Player : Creature("player") {
-
-}
+object Player : Creature("player")

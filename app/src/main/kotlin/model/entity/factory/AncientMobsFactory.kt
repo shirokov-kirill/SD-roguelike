@@ -2,11 +2,10 @@ package model.entity.factory
 
 import model.entity.GameEntity
 import model.entity.attributes.*
-import model.entity.attributes.effects.Clonable
+import model.entity.attributes.effects.Cloneable
 import model.entity.behaviors.*
-import model.entity.facets.Hitable
+import model.entity.facets.Hittable
 import model.entity.facets.Movable
-import model.entity.types.BaseType
 import model.entity.types.Monster
 import view.views.play.resources.GameTiles
 
@@ -21,17 +20,17 @@ class AncientMobsFactory : MobsFactory() {
     private fun createMonsterWithProbability(): GameEntity<Monster> {
         val res = Math.random()
         var monster: GameEntity<Monster>? = null
-        if (res < 0.25) {
-            monster = createAgressiveAncient()
+        monster = if (res < 0.25) {
+            createAggressiveAncient()
         } else if (res < 0.5) {
-            monster = createScaredAncient()
+            createScaredAncient()
         } else if (res < 0.75) {
-            monster = createStandingAncient()
+            createStandingAncient()
         } else {
-            monster = createMutableGoingAncient()
+            createMutableGoingAncient()
         }
         if (Math.random() > 0.8) {
-            monster.applyEffect(Clonable(25))
+            monster.applyEffect(Cloneable(25))
         }
         return monster
     }
@@ -47,7 +46,7 @@ class AncientMobsFactory : MobsFactory() {
             Effects()
         ),
         mutableListOf(ScaryMove(), EffectsDecreaser()),
-        mutableListOf(Movable(), Hitable())
+        mutableListOf(Movable(), Hittable())
     )
 
     private fun createStandingAncient() = newAliveGameEntityOfType(
@@ -61,21 +60,21 @@ class AncientMobsFactory : MobsFactory() {
             Effects()
         ),
         mutableListOf(StandingMove(), EffectsDecreaser()),
-        mutableListOf(Movable(), Hitable())
+        mutableListOf(Movable(), Hittable())
     )
 
-    private fun createAgressiveAncient() = newAliveGameEntityOfType(
+    private fun createAggressiveAncient() = newAliveGameEntityOfType(
         Monster,
         mutableListOf(
             EntityDirection(),
             EntityPosition(),
-            EntityTile(GameTiles.AGRESSIVE_ANCIENT),
+            EntityTile(GameTiles.AGGRESSIVE_ANCIENT),
             EntityLevel(),
             EntityInventory(),
             Effects()
         ),
-        mutableListOf(AgressiveMove(), EffectsDecreaser()),
-        mutableListOf(Movable(), Hitable())
+        mutableListOf(AggressiveMove(), EffectsDecreaser()),
+        mutableListOf(Movable(), Hittable())
     )
 
     private fun createMutableGoingAncient() = newAliveGameEntityOfType(
@@ -83,13 +82,13 @@ class AncientMobsFactory : MobsFactory() {
         mutableListOf(
             EntityDirection(),
             EntityPosition(),
-            EntityTile(GameTiles.AGRESSIVE_ANCIENT),
+            EntityTile(GameTiles.AGGRESSIVE_ANCIENT),
             EntityLevel(),
             EntityInventory(),
             Effects()
         ),
         mutableListOf(MutableBehavior(), EffectsDecreaser()),
-        mutableListOf(Movable(), Hitable())
+        mutableListOf(Movable(), Hittable())
     )
 
 }

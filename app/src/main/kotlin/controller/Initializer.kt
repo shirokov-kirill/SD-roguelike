@@ -1,8 +1,8 @@
 package controller
 
+import controller.world.generator.GameWorldBuilder
 import model.StateModificationsHandler
 import model.entity.factory.AncientMobsFactory
-import model.entity.factory.CorruptedMobsFactory
 import model.entity.factory.EquipmentFactory
 import model.state.AdditionalInfo
 import model.view.state.Game
