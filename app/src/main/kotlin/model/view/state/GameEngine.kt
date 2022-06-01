@@ -20,7 +20,7 @@ class GameEngine(
 
     init {
         this.mainJob = launch {
-            while (true) {
+            while (!Controller.isFinished) {
                 if (Controller.isActive) {
                     executeGameTurn()
                 }
@@ -41,6 +41,13 @@ class GameEngine(
 
     fun removeEntity(entity: GameEntity<out BaseType>) {
         entities.remove(entity)
+
+        if (entity == player) {
+            launch {
+                delay(1500)
+                Controller.onLose()
+            }
+        }
     }
 
     fun executeTurn(context: GameContext) {

@@ -17,6 +17,7 @@ import org.hexworks.zircon.api.data.Tile
 import org.hexworks.zircon.api.game.GameArea
 import org.hexworks.zircon.api.screen.Screen
 import org.hexworks.zircon.api.uievent.UIEvent
+import java.awt.geom.Point2D.distance
 
 class GameWorld(
     blocks: Map<Position3D, GameBlock>,
@@ -66,10 +67,16 @@ class GameWorld(
 
     fun performHit(position: Position3D, fromEntity: GameEntity<out Creature>, context: GameContext) {
         val target = fetchBlockAt(position)
-        if (target.isPresent) {
+        val fromPos = fromEntity.position
+        if (target.isPresent && areNeighbors(fromPos, position)) {
             target.get().hit(fromEntity, context)
         }
     }
+
+    private fun areNeighbors(
+        fromPos: Position3D,
+        position: Position3D
+    ) = distance(fromPos.x.toDouble(), fromPos.y.toDouble(), position.x.toDouble(), position.y.toDouble()) == 1.0
 
     fun getCreatureOnPosition(position: Position3D): GameEntity<Creature>? {
         val gameEntity = fetchBlockAt(position).map {

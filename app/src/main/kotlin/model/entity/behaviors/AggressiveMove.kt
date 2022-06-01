@@ -19,6 +19,8 @@ class AggressiveMove : MonsterMove() {
             val playerPosition = player.position
             val dx = entity.position.x - playerPosition.x
             val dy = entity.position.y - playerPosition.y
+            context.world.performHit(playerPosition, entity, context)
+
             if (dx < 0) {
                 newPosition = if (dy < 0) {
                     if (Math.random() < 0.5) {

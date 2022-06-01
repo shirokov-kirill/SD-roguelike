@@ -15,7 +15,7 @@ class Controller {
 
     companion object {
         var isActive: Boolean = false
-        private var isFinished = false
+        var isFinished = false
         private var stateModificationsHandler: StateModificationsHandler? = null
 
         /*
@@ -85,6 +85,11 @@ class Controller {
             interpret(InterfaceCommands.TO_PLAY)
         }
 
+        fun onLose() {
+            isActive = false
+            isFinished = true
+            interpret(InterfaceCommands.ON_LOSE)
+        }
         /*
         initializeGame() method is private and used to create ModificationHandler if not exists
         that mainly holds all the Game state
@@ -92,10 +97,13 @@ class Controller {
 
         private fun initializeGame() {
             if (stateModificationsHandler == null) {
-                stateModificationsHandler = Initializer.initialize(GameWorldBuilder.GENERATE, "", Difficulty.EASY)
+                forceInitializeGame()
             }
         }
 
+        private fun forceInitializeGame() {
+            stateModificationsHandler = Initializer.initialize(GameWorldBuilder.GENERATE, "", Difficulty.EASY)
+        }
         /*
         interpret() method is private and used to respond to InterfaceCommands with
         proper modification of state and interface
@@ -106,6 +114,11 @@ class Controller {
                 InterfaceCommands.START -> {
                     initializeGame()
                     Viewer.render(InterfaceCommands.START, null, null)
+                }
+                InterfaceCommands.ON_LOSE -> {
+                    forceInitializeGame()
+                    Viewer.render(InterfaceCommands.START, null, null)
+                    isFinished = false
                 }
                 InterfaceCommands.TO_PLAY -> {
                     Viewer.render(
