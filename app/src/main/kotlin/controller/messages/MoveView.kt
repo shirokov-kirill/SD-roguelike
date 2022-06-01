@@ -13,4 +13,5 @@ tells an entity it needs to move camera (frame of viewed map)
 data class MoveView(
     override val context: GameContext,
     override val entity: GameEntity<out Creature>,
-    val previousPosition: Position3D) : GameMessage(entity, context)
+    val previousPosition: Position3D
+) : GameMessage(entity, context)

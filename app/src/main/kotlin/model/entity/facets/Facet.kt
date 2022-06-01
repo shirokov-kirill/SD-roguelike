@@ -7,7 +7,7 @@ import controller.messages.Response
 This is a base interface for any facet
  */
 
-interface Facet<Message>{
+interface Facet<Message> {
 
     /*
     receive(message) performs an action on entity

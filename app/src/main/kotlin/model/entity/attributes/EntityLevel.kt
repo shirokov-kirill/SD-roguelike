@@ -2,7 +2,7 @@ package model.entity.attributes
 
 import org.hexworks.cobalt.databinding.api.extension.toProperty
 
-class EntityLevel(initialLevel: Int = 1, initialExperience: Int = 0): Attribute {
+class EntityLevel(initialLevel: Int = 1, initialExperience: Int = 0) : Attribute {
 
     private val levelProperty = initialLevel.toProperty()
 

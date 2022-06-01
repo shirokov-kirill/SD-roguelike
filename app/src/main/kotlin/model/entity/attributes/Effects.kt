@@ -6,7 +6,7 @@ import org.hexworks.cobalt.databinding.api.extension.toProperty
 
 class Effects(
     initialEffects: MutableList<Effect> = mutableListOf()
-): Attribute {
+) : Attribute {
 
     private var effectsProperty = initialEffects.toProperty()
 

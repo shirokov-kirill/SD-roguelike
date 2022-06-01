@@ -48,8 +48,8 @@ class PlayView(
             .build()
 
         val fragment = InventoryFragment(game.getPlayer(), DIALOG_SIZE.width - 3,
-            {entity -> Controller.performEquipItemAction(entity)},
-            {entity -> Controller.performTakeOffItemAction(entity)})
+            { entity -> Controller.performEquipItemAction(entity) },
+            { entity -> Controller.performTakeOffItemAction(entity) })
 
         panel.addFragment(fragment)
 
@@ -111,8 +111,8 @@ class PlayView(
         screen.addComponents(sidebar, logArea, gameComponent)
 
         screen.handleKeyboardEvents(KeyboardEventType.KEY_PRESSED) { event, _ ->
-            if(event.code == KeyCode.KEY_I){
-                if(!inventoryOpened) {
+            if (event.code == KeyCode.KEY_I) {
+                if (!inventoryOpened) {
                     openInventory()
                     inventoryOpened = true
                 }
@@ -122,7 +122,7 @@ class PlayView(
             Processed
         }
 
-        if(withInventory) {
+        if (withInventory) {
             openInventory()
         }
     }

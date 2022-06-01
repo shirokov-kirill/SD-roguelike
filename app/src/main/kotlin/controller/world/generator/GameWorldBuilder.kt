@@ -27,10 +27,10 @@ class GameWorldBuilder(private val worldSize: Size3D) {
     */
 
     fun passLoadingType(type: String): GameWorldBuilder {
-        if(type == GENERATE || type == LOAD){
+        if (type == GENERATE || type == LOAD) {
             loadingType = type
         } else {
-          throw IllegalArgumentException("Not supported string passed")
+            throw IllegalArgumentException("Not supported string passed")
         }
         return this
     }
@@ -40,7 +40,7 @@ class GameWorldBuilder(private val worldSize: Size3D) {
     path loading property to the Builder
     */
 
-    fun passFilePath(path: String): GameWorldBuilder{
+    fun passFilePath(path: String): GameWorldBuilder {
         filePath = path
         return this
     }
@@ -50,17 +50,17 @@ class GameWorldBuilder(private val worldSize: Size3D) {
     difficulty generator property to the Builder
     */
 
-    fun passDifficulty(difficulty: Difficulty): GameWorldBuilder{
+    fun passDifficulty(difficulty: Difficulty): GameWorldBuilder {
         this.difficulty = difficulty
         return this
     }
 
-    fun withMobsFactory(mobsFactory: MobsFactory): GameWorldBuilder{
+    fun withMobsFactory(mobsFactory: MobsFactory): GameWorldBuilder {
         this.mobsFactory = mobsFactory
         return this
     }
 
-    fun withEquipmentFactory(equipmentFactory: EquipmentFactory): GameWorldBuilder{
+    fun withEquipmentFactory(equipmentFactory: EquipmentFactory): GameWorldBuilder {
         this.equipmentFactory = equipmentFactory
         return this
     }
@@ -71,7 +71,7 @@ class GameWorldBuilder(private val worldSize: Size3D) {
     */
 
     private fun makeCaves(): GameWorldBuilder {
-        if(loadingType == GENERATE){
+        if (loadingType == GENERATE) {
             return randomizeTiles()
                 .smooth(8)
         } else {
@@ -80,10 +80,10 @@ class GameWorldBuilder(private val worldSize: Size3D) {
         }
     }
 
-    private fun generateMobs(world: GameWorld){
-        if(loadingType == GENERATE){
+    private fun generateMobs(world: GameWorld) {
+        if (loadingType == GENERATE) {
             var monstersCount = 0
-            when(difficulty){
+            when (difficulty) {
                 Difficulty.EASY -> monstersCount = 10
                 Difficulty.MEDIUM -> monstersCount = 15
                 Difficulty.HARD -> monstersCount = 20
@@ -99,8 +99,8 @@ class GameWorldBuilder(private val worldSize: Size3D) {
         }
     }
 
-    private fun generateEquipment(world: GameWorld){
-        if(loadingType == GENERATE){
+    private fun generateEquipment(world: GameWorld) {
+        if (loadingType == GENERATE) {
             var equipmentCount = 15
 
 
@@ -114,8 +114,8 @@ class GameWorldBuilder(private val worldSize: Size3D) {
         }
     }
 
-    private fun generatePlayer(world: GameWorld){
-        if(loadingType == GENERATE){
+    private fun generatePlayer(world: GameWorld) {
+        if (loadingType == GENERATE) {
             world.addEntity(player, true)
         } else {
             return

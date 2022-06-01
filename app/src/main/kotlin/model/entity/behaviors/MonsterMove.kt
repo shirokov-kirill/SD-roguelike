@@ -2,4 +2,4 @@ package model.entity.behaviors
 
 import model.entity.types.Monster
 
-open abstract class MonsterMove: BaseBehavior()
+open abstract class MonsterMove : BaseBehavior()

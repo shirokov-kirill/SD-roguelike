@@ -9,13 +9,13 @@ import kotlin.reflect.KClass
 BaseFacet is a base class for any Facet
  */
 
-abstract class BaseFacet<P: GameMessage>(
+abstract class BaseFacet<P : GameMessage>(
     private val messageType: KClass<P>
-): Facet<P> {
+) : Facet<P> {
 
     @Suppress("UNCHECKED_CAST")
     override fun tryReceive(message: GameMessage): Response {
-        if(message::class == messageType){
+        if (message::class == messageType) {
             return receive(message as P)
         } else {
             return Pass

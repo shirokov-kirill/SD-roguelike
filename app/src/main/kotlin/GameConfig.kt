@@ -18,7 +18,7 @@ object GameConfig {
     const val WINDOW_WIDTH = 80
     const val WINDOW_HEIGHT = 50
 
-    val WORLD_SIZE = Size3D.create(WINDOW_WIDTH * 2, WINDOW_HEIGHT * 2 , 1)
+    val WORLD_SIZE = Size3D.create(WINDOW_WIDTH * 2, WINDOW_HEIGHT * 2, 1)
     val DIALOG_SIZE = Size.create(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
     val GAME_AREA_SIZE = Size3D.create(
         xLength = WINDOW_WIDTH - SIDEBAR_WIDTH,

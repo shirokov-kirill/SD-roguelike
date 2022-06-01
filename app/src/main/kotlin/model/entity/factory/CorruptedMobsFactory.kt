@@ -14,7 +14,7 @@ import model.entity.types.BaseType
 import model.entity.types.Monster
 import view.views.play.resources.GameTiles
 
-class CorruptedMobsFactory: MobsFactory() {
+class CorruptedMobsFactory : MobsFactory() {
 
     override fun getDefault(): GameEntity<Monster> {
         return createEntity()
@@ -25,14 +25,14 @@ class CorruptedMobsFactory: MobsFactory() {
     private fun createMonsterWithProbability(): GameEntity<Monster> {
         val res = Math.random()
         var monster: GameEntity<Monster>? = null
-        if(res < 0.33){
+        if (res < 0.33) {
             monster = createAgressiveCorrupted()
-        } else if(res < 0.66){
+        } else if (res < 0.66) {
             monster = createScaredCorrupted()
         } else {
             monster = createStandingCorrupted()
         }
-        if(Math.random() > 0.8){
+        if (Math.random() > 0.8) {
             monster.applyEffect(Clonable(25))
         }
         return monster
@@ -40,21 +40,42 @@ class CorruptedMobsFactory: MobsFactory() {
 
     private fun createScaredCorrupted() = newAliveGameEntityOfType(
         Monster,
-        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.SCARED_CORRUPTED), EntityLevel(), EntityInventory(), Effects()),
+        mutableListOf(
+            EntityDirection(),
+            EntityPosition(),
+            EntityTile(GameTiles.SCARED_CORRUPTED),
+            EntityLevel(),
+            EntityInventory(),
+            Effects()
+        ),
         mutableListOf(ScaryMove(), EffectsDecreaser()),
         mutableListOf(Movable(), Hitable(), Cloneable())
     )
 
     private fun createStandingCorrupted() = newAliveGameEntityOfType(
         Monster,
-        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.STANDING_CORRUPTED), EntityLevel(), EntityInventory(), Effects()),
+        mutableListOf(
+            EntityDirection(),
+            EntityPosition(),
+            EntityTile(GameTiles.STANDING_CORRUPTED),
+            EntityLevel(),
+            EntityInventory(),
+            Effects()
+        ),
         mutableListOf(StandingMove(), EffectsDecreaser()),
         mutableListOf(Movable(), Hitable(), Cloneable())
     )
 
     private fun createAgressiveCorrupted() = newAliveGameEntityOfType(
         Monster,
-        mutableListOf(EntityDirection(), EntityPosition(), EntityTile(GameTiles.AGRESSIVE_CORRUPTED), EntityLevel(), EntityInventory(), Effects()),
+        mutableListOf(
+            EntityDirection(),
+            EntityPosition(),
+            EntityTile(GameTiles.AGRESSIVE_CORRUPTED),
+            EntityLevel(),
+            EntityInventory(),
+            Effects()
+        ),
         mutableListOf(AgressiveMove(), EffectsDecreaser()),
         mutableListOf(Movable(), Hitable(), Cloneable())
     )

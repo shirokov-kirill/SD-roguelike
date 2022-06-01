@@ -5,7 +5,7 @@ import controller.messages.Consumed
 import controller.messages.Response
 import model.entity.attributes.*
 
-class Cloneable: BaseFacet<Clone>(Clone::class) {
+class Cloneable : BaseFacet<Clone>(Clone::class) {
 
     override fun receive(message: Clone): Response {
         val entity = (message.entity as AliveEntity)

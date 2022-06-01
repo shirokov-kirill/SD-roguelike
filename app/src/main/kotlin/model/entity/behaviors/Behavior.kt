@@ -9,7 +9,7 @@ import model.entity.types.Creature
 This is a base interface for any behavior
  */
 
-interface Behavior{
+interface Behavior {
 
     /*
     handleEffects(entity, message) applies effects

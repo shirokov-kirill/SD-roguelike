@@ -20,8 +20,8 @@ class GameEngine(
 
     init {
         this.mainJob = launch {
-            while(true) {
-                if(Controller.isActive){
+            while (true) {
+                if (Controller.isActive) {
                     executeGameTurn()
                 }
                 delay(1000L)
@@ -30,15 +30,16 @@ class GameEngine(
     }
 
     private fun executeGameTurn() {
-        entities.filter { it.type is Creature } .filter { it.needsUpdate() }.map { it.update(GameContext(this.world, null, null, this.player)) }
+        entities.filter { it.type is Creature }.filter { it.needsUpdate() }
+            .map { it.update(GameContext(this.world, null, null, this.player)) }
         Controller.onGameSecondlyChange()
     }
 
-    fun addEntity(entity: GameEntity<out BaseType>){
+    fun addEntity(entity: GameEntity<out BaseType>) {
         entities.add(entity)
     }
 
-    fun removeEntity(entity: GameEntity<out BaseType>){
+    fun removeEntity(entity: GameEntity<out BaseType>) {
         entities.remove(entity)
     }
 

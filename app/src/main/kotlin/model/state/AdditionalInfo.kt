@@ -28,15 +28,15 @@ class AdditionalInfo() {
         return this
     }
 
-    fun getPlayerHitPoints(): Int{
+    fun getPlayerHitPoints(): Int {
         return playerHitPoints
     }
 
-    fun getPlayerDamage(): Int{
+    fun getPlayerDamage(): Int {
         return playerDamage
     }
 
-    fun getPlayerLevel(): Int{
+    fun getPlayerLevel(): Int {
         return playerLevel
     }
 
