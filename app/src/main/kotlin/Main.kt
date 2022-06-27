@@ -1,5 +1,5 @@
 import controller.Controller
 
-fun main() {
-    Controller.startCommand()
+fun main(args: Array<String>) {
+    Controller.start()
 }

@@ -8,6 +8,7 @@ import org.hexworks.zircon.api.screen.Screen
 import org.hexworks.zircon.api.uievent.KeyCode
 import org.hexworks.zircon.api.uievent.KeyboardEvent
 import org.hexworks.zircon.api.uievent.UIEvent
+import view.InterfaceCommands
 import view.Viewer
 
 class Controller {
@@ -22,32 +23,35 @@ class Controller {
         (suggest only to use once at the beginning)
          */
 
-        fun toPlayCommand() {
-            Viewer.renderPlay(stateModificationsHandler?.getGame(), stateModificationsHandler?.getAdditionalInfo())
+        fun start() {
+            interpret(InterfaceCommands.START)
         }
 
-        private fun onLoseCommand() {
-            forceInitializeGame()
-            Viewer.renderStart()
-            isFinished = false
-        }
+        /*
+        throwMouseInput() method can be used to handle MouseClicks from user
+        that are not currently performed in the game
+         */
 
-        fun startCommand() {
-            initializeGame()
-            Viewer.renderStart()
+        fun throwMouseInput(input: InterfaceCommands) {
+            if (input == InterfaceCommands.TO_PLAY) {
+                isActive = true
+            }
+            interpret(input)
         }
 
         fun performEquipItemAction(entity: GameEntity<Equipment>) {
-            Viewer.renderToInventory(
-                stateModificationsHandler!!.performEquipItemAction(entity),
-                stateModificationsHandler!!.getAdditionalInfo()
+            Viewer.render(
+                InterfaceCommands.TO_INVENTORY,
+                stateModificationsHandler?.performEquipItemAction(entity),
+                stateModificationsHandler?.getAdditionalInfo()
             )
         }
 
         fun performTakeOffItemAction(entity: GameEntity<Equipment>) {
-            Viewer.renderToInventory(
-                stateModificationsHandler!!.performTakeOffItemAction(entity),
-                stateModificationsHandler!!.getAdditionalInfo()
+            Viewer.render(
+                InterfaceCommands.TO_INVENTORY,
+                stateModificationsHandler?.performTakeOffItemAction(entity),
+                stateModificationsHandler?.getAdditionalInfo()
             )
         }
 
@@ -56,13 +60,16 @@ class Controller {
         to InterfaceCommands
          */
 
-        private val keyCodes = setOf(KeyCode.KEY_W, KeyCode.KEY_A, KeyCode.KEY_S, KeyCode.KEY_D, KeyCode.SPACE)
-
         fun throwKeyboardInput(input: KeyboardEvent, screen: Screen) {
-            if (input.code in keyCodes) {
-                renderStepCommand(screen, input)
-            } else {
-                print(input.key)
+            when (input.code) {
+                KeyCode.KEY_W -> interpret(InterfaceCommands.GO_TOP, input, screen)
+                KeyCode.KEY_A -> interpret(InterfaceCommands.GO_LEFT, input, screen)
+                KeyCode.KEY_S -> interpret(InterfaceCommands.GO_BOTTOM, input, screen)
+                KeyCode.KEY_D -> interpret(InterfaceCommands.GO_RIGHT, input, screen)
+                KeyCode.SPACE -> interpret(InterfaceCommands.HIT, input, screen)
+                else -> {
+                    print(input.key)
+                }
             }
         }
 
@@ -75,13 +82,13 @@ class Controller {
         }
 
         fun onGameSecondlyChange() {
-            toPlayCommand()
+            interpret(InterfaceCommands.TO_PLAY)
         }
 
         fun onLose() {
             isActive = false
             isFinished = true
-            onLoseCommand()
+            interpret(InterfaceCommands.ON_LOSE)
         }
         /*
         initializeGame() method is private and used to create ModificationHandler if not exists
@@ -102,12 +109,63 @@ class Controller {
         proper modification of state and interface
          */
 
-        private fun renderStepCommand(
-            screen: Screen?,
-            uiEvent: UIEvent?
-        ) {
-            Viewer.renderPlay(stateModificationsHandler?.updateCurrentGame(screen!!, uiEvent!!),
-                stateModificationsHandler?.getAdditionalInfo())
+        private fun interpret(input: InterfaceCommands, uiEvent: UIEvent? = null, screen: Screen? = null) {
+            when (input) {
+                InterfaceCommands.START -> {
+                    initializeGame()
+                    Viewer.render(InterfaceCommands.START, null, null)
+                }
+                InterfaceCommands.ON_LOSE -> {
+                    forceInitializeGame()
+                    Viewer.render(InterfaceCommands.START, null, null)
+                    isFinished = false
+                }
+                InterfaceCommands.TO_PLAY -> {
+                    Viewer.render(
+                        InterfaceCommands.TO_PLAY,
+                        stateModificationsHandler?.getGame(),
+                        stateModificationsHandler?.getAdditionalInfo()
+                    )
+                }
+                InterfaceCommands.GO_RIGHT -> {
+                    Viewer.render(
+                        InterfaceCommands.TO_PLAY,
+                        stateModificationsHandler?.updateCurrentGame(screen!!, uiEvent!!),
+                        stateModificationsHandler?.getAdditionalInfo()
+                    )
+                }
+                InterfaceCommands.GO_BOTTOM -> {
+                    Viewer.render(
+                        InterfaceCommands.TO_PLAY,
+                        stateModificationsHandler?.updateCurrentGame(screen!!, uiEvent!!),
+                        stateModificationsHandler?.getAdditionalInfo()
+                    )
+                }
+                InterfaceCommands.GO_LEFT -> {
+                    Viewer.render(
+                        InterfaceCommands.TO_PLAY,
+                        stateModificationsHandler?.updateCurrentGame(screen!!, uiEvent!!),
+                        stateModificationsHandler?.getAdditionalInfo()
+                    )
+                }
+                InterfaceCommands.GO_TOP -> {
+                    Viewer.render(
+                        InterfaceCommands.TO_PLAY,
+                        stateModificationsHandler?.updateCurrentGame(screen!!, uiEvent!!),
+                        stateModificationsHandler?.getAdditionalInfo()
+                    )
+                }
+                InterfaceCommands.HIT -> {
+                    Viewer.render(
+                        InterfaceCommands.TO_PLAY,
+                        stateModificationsHandler?.updateCurrentGame(screen!!, uiEvent!!),
+                        stateModificationsHandler?.getAdditionalInfo()
+                    )
+                }
+                else -> {
+                    return
+                }
+            }
         }
     }
 }
