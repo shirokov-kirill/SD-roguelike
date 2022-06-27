@@ -6,7 +6,6 @@ import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.component.ComponentAlignment
 import org.hexworks.zircon.api.grid.TileGrid
 import org.hexworks.zircon.api.view.base.BaseView
-import view.InterfaceCommands
 
 /*
 StartView implements start view with
@@ -32,7 +31,8 @@ class StartView(
             .build()
 
         startButton.onActivated {
-            Controller.throwMouseInput(InterfaceCommands.TO_PLAY)
+            Controller.isActive = true
+            Controller.toPlayCommand()
         }
 
         screen.addComponents(header, startButton)

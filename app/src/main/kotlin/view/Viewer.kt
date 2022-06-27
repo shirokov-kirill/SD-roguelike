@@ -4,6 +4,7 @@ import model.state.AdditionalInfo
 import model.view.state.Game
 import org.hexworks.zircon.api.SwingApplications
 import org.hexworks.zircon.api.application.AppConfig
+import org.hexworks.zircon.api.view.base.BaseView
 import view.views.PlayView
 import view.views.StartView
 
@@ -24,24 +25,20 @@ class Viewer {
                 .build()
         )
 
-        fun render(input: InterfaceCommands, game: Game?, additionalInfo: AdditionalInfo?) {
-            when (input) {
-                InterfaceCommands.START -> {
-                    tileGrid.clear()
-                    StartView(tileGrid).dock()
-                }
-                InterfaceCommands.TO_PLAY -> {
-                    tileGrid.clear()
-                    PlayView(tileGrid, game!!, additionalInfo!!, false).dock()
-                }
-                InterfaceCommands.TO_INVENTORY -> {
-                    tileGrid.clear()
-                    PlayView(tileGrid, game!!, additionalInfo!!, true).dock()
-                }
-                else -> {
-                    return
-                }
-            }
+        private fun BaseView.renderView() {
+            tileGrid.clear()
+            dock()
+        }
+        fun renderToInventory(game: Game?, additionalInfo: AdditionalInfo?) {
+            PlayView(tileGrid, game!!, additionalInfo!!, true).renderView()
+        }
+
+        fun renderPlay(game: Game?, additionalInfo: AdditionalInfo?) {
+            PlayView(tileGrid, game!!, additionalInfo!!, false).renderView()
+        }
+
+        fun renderStart() {
+            StartView(tileGrid).renderView()
         }
     }
 
