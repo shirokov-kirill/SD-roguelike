@@ -1,6 +1,6 @@
 package controller
 
-import controller.world.generator.GameWorldBuilder
+import GameConfig
 import model.StateModificationsHandler
 import model.entity.GameEntity
 import model.entity.types.Equipment
@@ -18,18 +18,18 @@ class Controller {
         var isFinished = false
         private var stateModificationsHandler: StateModificationsHandler? = null
 
-        /*
-        start() method can be used to create all the game
-        (suggest only to use once at the beginning)
+        /**
+         * start() method can be used to create all the game
+         * (suggest only to use once at the beginning)
          */
 
         fun start() {
             interpret(InterfaceCommands.START)
         }
 
-        /*
-        throwMouseInput() method can be used to handle MouseClicks from user
-        that are not currently performed in the game
+        /**
+         * throwMouseInput() method can be used to handle MouseClicks from user
+         * that are not currently performed in the game
          */
 
         fun throwMouseInput(input: InterfaceCommands) {
@@ -55,9 +55,9 @@ class Controller {
             )
         }
 
-        /*
-        throwKeyboardInput() method can be used to parse clicks on Keyboard from user
-        to InterfaceCommands
+        /**
+         * throwKeyboardInput() method can be used to parse clicks on Keyboard from user
+         * to InterfaceCommands
          */
 
         fun throwKeyboardInput(input: KeyboardEvent, screen: Screen) {
@@ -90,9 +90,10 @@ class Controller {
             isFinished = true
             interpret(InterfaceCommands.ON_LOSE)
         }
-        /*
-        initializeGame() method is private and used to create ModificationHandler if not exists
-        that mainly holds all the Game state
+
+        /**
+         * initializeGame() method is private and used to create ModificationHandler if not exists
+         * that mainly holds all the Game state
          */
 
         private fun initializeGame() {
@@ -102,13 +103,14 @@ class Controller {
         }
 
         private fun forceInitializeGame() {
-            stateModificationsHandler = Initializer.initialize(GameWorldBuilder.GENERATE, "", Difficulty.EASY)
+            stateModificationsHandler =
+                Initializer.initialize(GameConfig.GAMEWORLD_BUILDER, GameConfig.GAMEWORLD_BUILDER_FILE, Difficulty.EASY)
         }
-        /*
-        interpret() method is private and used to respond to InterfaceCommands with
-        proper modification of state and interface
-         */
 
+        /**
+         * interpret() method is private and used to respond to InterfaceCommands with
+         * proper modification of state and interface
+         */
         private fun interpret(input: InterfaceCommands, uiEvent: UIEvent? = null, screen: Screen? = null) {
             when (input) {
                 InterfaceCommands.START -> {

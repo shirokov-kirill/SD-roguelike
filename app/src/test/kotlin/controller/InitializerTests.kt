@@ -1,5 +1,7 @@
 package controller
 
+import controller.world.generator.GameWorldBuilder
+import org.hexworks.zircon.api.data.Size3D
 import org.junit.jupiter.api.Test
 
 class InitializerTests {
@@ -10,7 +12,12 @@ class InitializerTests {
     }
 
     @Test
-    fun testInitializeForNotImplementedError() {
-//        Initializer.initialize(GameWorldBuilder.LOAD, "", Difficulty.EASY)
+    fun testInitializeLoad() {
+        Initializer.initialize(
+            GameWorldBuilder.GameBuilderType.LOAD,
+            "src/test/resources/testMap.txt",
+            Difficulty.EASY,
+            Size3D.create(3, 2, 1)
+        )
     }
 }

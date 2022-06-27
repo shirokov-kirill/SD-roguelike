@@ -1,11 +1,12 @@
+import controller.world.generator.GameWorldBuilder
 import org.hexworks.zircon.api.CP437TilesetResources
 import org.hexworks.zircon.api.ColorThemes
 import org.hexworks.zircon.api.data.Size
 import org.hexworks.zircon.api.data.Size3D
 
-/*
-Here are implemented all base
-constants for game setup
+/**
+ * Here are implemented all base
+ * constants for game setup
  */
 
 object GameConfig {
@@ -25,4 +26,7 @@ object GameConfig {
         yLength = WINDOW_HEIGHT - INVENTORY_AREA_HEIGHT,
         zLength = 1
     )
+
+    val GAMEWORLD_BUILDER_FILE = "src/main/resources/map.txt"
+    val GAMEWORLD_BUILDER = GameWorldBuilder.GameBuilderType.GENERATE
 }

@@ -3,9 +3,10 @@ package model.view.state.resourses
 import view.views.play.resources.GameTiles
 
 object GameBlockFactory {
+    val floor
+        get() = GameBlock(GameTiles.FLOOR)
 
-    fun floor() = GameBlock(GameTiles.FLOOR)
-
-    fun wall() = GameBlock(GameTiles.WALL)
+    val wall
+        get() = GameBlock(GameTiles.WALL)
 
 }
