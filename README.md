@@ -1,119 +1,126 @@
-# SD-roguelike
+# Software Development. Roguelike game
 
-## Запуск
+## How to play
 
 ```
 cd app
 ./gradlew run
 ```
 
-## Управление
-- `WASD` -- передвижение
-- `Space` -- уничтожить стену или ударить врага
-- `i` -- открыть инвентарь
+## Controls
+- `WASD` -- movement
+- `Space` -- break a wall or hit a monster
+- `i` -- open inventory
 
-## Разработали
-1. Широков Кирилл
-2. Вавилов Марк
-3. Энгель Игорь
+## Developers
+1. Kirill Shirokov
+2. Mark Vavilov
+3. Igor Engel
 
-## Общие сведения
-Эта Roguelike-игра предназначена для отдыха и представляет из себя "симулятор убивалки". Это значит, что цель - убить всех монстров.
-Есть несколько уровней сложности и генератор случайных карт для наиболее разнообразного геймплея и большего интереса для игроков. Все объекты карты разрушаемы.
-В игре имеется инвентарь и система уровней, которые внесут в игру ещё больше разнообразия.
+## About this game
+This Roguelike game is designed for relaxation and is a simulator of a hunter. This means that the goal is to defeat all the monsters. There are several difficulty levels and a random map generator for a more diverse gameplay and greater interest for players. All map objects are destroyable. The game includes an inventory and leveling system, adding even more variety to the gameplay.
 
-## Ключевые требования
-### Функциональные требования
-1. Консольная графика
-2. Персонаж должен перемещаться по карте с помощью клавиатуры (ввод игрока)
-3. Лишь один игрок (и только игрок) может контролировать одного персонажа в рамках модели
-4. Цель игры - убить всех монстров на карте
-5. Игровое пространство состоит из клеток, на которых могут находиться: игрок, монстр или предмет инвентаря
-6. Предметы инвентаря имеют несколько типов: оружие (меч, посох и тд), броня (голова, корпус, ноги и руки)
-7. У каждой живой сущности имеются здоровье, урон за удар и позиция на поле.
-8. У предметов инвентаря имеются повышающие характеристики. Их можно подобрать с поля и экипировать для применения бонусов к характеристикам персонажа
-9. Если здоровье игрока становится меньше нуля - смерть
-10. Игра посекундного реального времени (монстры действуют независимо от действий пользователя)
+## Main requirements
+### Functional requirements
+1. Console graphics
+2. Character should move around the game field with user input
+3. One player (and only the player) can control only one character in the model
+4. Aim - hunt all the monsters on a virtual map
+5. Game field consists of squares on which either of 4 things can appear: a player, a monster, an obstacle or an inventory item
+6. Types of inventory items: weapons (sword, staff etc), armor (head, body, hand, leg)
+7. Every entity alive has: health, damage per hit and position on the map.
+8. Inventory items do upgrade your stats. They can be found on the field and then equipped to upgrade character stats
+9. If the health of the character is less or equal 0 - death
+10. Monsters behavior does not depend on behavior of the character
 
-### Качественные требования
-1. Возможность расширения для поддержки кастомизации
-2. Система должна быть самодостаточной на любой платформе, не зависеть от внешних данных
-3. Поддержка Windows, Linux, MacOS
+### Quality requirements
+1. Ability to extend the game to handle customization
+2. System should be able to run on MacOS, Windows and Linux without additional external resourses
 
-### Бизнес требования
-1. 2 месяца на разработку
+### Business requirements
+1. 2 months for development
 
-## Роли и случаи использования
-### Роли
-1. Игрок
-2. Roguelike-фанат
-3. Разработчик
+## Roles and usecases
+### Roles
+1. Player
+2. Roguelike-enjoyer
+3. Developer
 
-### Типичный игрок
-Уставший после работы или тяжелого дня человек, геймер
+### Average player
+Gamer after work
 
-### Случаи использования
-1. Пользователь хочет отдохнуть. Необходимо предоставить ему понятный интерфейс и не перегруженную картинку в консоли
-2. Roguelike-фанат хочет кастомизировать графику или добавить новые элементы. Для этого необходимо структурировать систему понятным любому человеку образом и в наиболее общем виде описать взаимодействия пользователя с игрой
-3. Разработчик хочет внести изменения в отдельные модули системы, перегруппировать их, или добавить новые механики. Чтобы это сделать легко, необходимо сразу же подумать о расширяемости системы
+### Typical usecases
+1. Users want to relax. It is necessary to provide them with a clear interface and an uncluttered visual experience in the console
+2. A Roguelike enthusiast wants to customize graphics or add new elements. To achieve this, it is necessary to structure the system in a way understandable to anyone and describe the user's interactions with the game in the most general form
+3. The developer wants to make changes to individual modules of the system, reorganize them, or add new mechanics. To make this easy, it is necessary to immediately consider the extensibility of the system
 
 
-## Структура
-### Описание компонентов системы
+## Structure
+### System components description
 
 ![Сomponent](description/ComponentDiagram.png)
 
-1. **Main component** - точка входа
-2. **Controller** - обеспечивает обработку данных от пользователя
-3. **Initializer** - обеспечивает генерацию исходных данных игры
-4. **Model** - это набор компонентов, которые сообщаются друг с другом для поддержки корректности изменения состояния приложения
-    - **Engine** - компонент, хранящий в себе сущности приложения, а значит способный изменять состояние
-    - **State** - хранит состояние, не может изменять его так как не обладает знаниями для этого
-    - **State Modification handler** - обеспечивает общение системы с состоянием
-5. **View** - обеспечивает отображение состояния на экране, используя библиотеку Zircon
+1. **Main component** - entry point
+2. **Controller** - processes the data that comes from the user 
+3. **Initializer** - generates the initial game data
+4. **Model** - a set of components which are connected to each other to make proper state transitions during the game
+    - **Engine** - component that can modify the data in the state given the previous state and user action
+    - **State** - storage of the game data
+    - **State Modification handler** - component that enables connection between the game and it's state
+5. **View** - renders the image from the current game state using Zircon library
 
-### Структура классов системы
+### System class structure
 
 ![MainClass](description/MainClassDiagram.png)
 
-1. Class Controller содержит в себе состояние программы на уровне администрирования (начата ли игра, достигнута ли победа, открыты ли диалоговые окна и тд)
-2. Class AppState является хранилищем состояния, при этом его методы являются строгим подмножеством методов из StateModificationsHandler. GameMap и AdditionalInfo имеют методы, связанные лишь только с их уровнем абстракции
-3. StateModificationsHandler в данной ситуации не играет значительной роли, но полезен будет для (возможно) логирования действий, удобен для работы с несколькими состояниями (если такое потребуется), в том числе, например, для реализации Сохранений
-4. Viewer использует набор экранов, созданных с помощью библиотеки Zircon, применяя тот или иной в зависимости от команды пришедшей из Controller.
-5. В самом начале игры запускается Initializer, который генерирует начальное состояние приложения с помощью строителя GameWorldBuilder и передаёт его в Controller для дальнейшей работы.
-6. Один из циклов работы приложения (ход пользователя) происходит путем передачи внутрь состояния необходимых данных, собираемых на всех уровнях иерархии Controller -> StateModificationHandler -> AppState -> Game.
+
+1. Class `Controller` contains the program's administrative-level state (whether the game has started, whether victory has been achieved, whether dialog windows are open, etc.)
+2. Class `AppState` serves as the storage for the state, and its methods form a strict subset of methods from `StateModificationsHandler`. `GameMap` and `AdditionalInfo` have methods related only to their level of abstraction
+3. In current development state, `StateModificationsHandler` does not play a significant role but can be useful for (possibly) logging actions, convenient for working with multiple states (if needed), including, for example, implementing save functionality
+4. `Viewer` uses a set of screens created using the Zircon library, choosing one of them depending on the command received from `Controller`
+5. In the beginning of the game, the `Initializer` is launched, which generates the initial application state using the `GameWorldBuilder` and passes it to `Controller` for further processing
+6. One of the application's loops (user turn) occurs by passing necessary data inside the state, collected at all levels of the hierarchy: `Controller` -> `StateModificationHandler` -> `AppState` -> `Game`
 
 ![GameClass](description/GameClassDiagram.png)
 
-1. Класс Game хранит в себе поле GameWorld, а также игрока -- класс GameEntity<T>, параметризованный объектом Player
-2. GameWorld хранит в себе движок. При желании обновиться, GameWorld не делает это самостоятельно, а вызывается движок, который делает всё за него. В любой игре состояние может изменяться лишь под действием сущностей, которые в ней находятся, поэтому движок для каждой сущности запускает процесс обновления состояния (вызовы behaviors, о которых далее), что в дальнейшем приводит к изменению всего состояния GameWorld, на чём итерация завершается, а обновлённая информация показывается на экране.
-3. GameWorld также хранит карту, состоящую из GameBlock, определённого размера, сгенерированную в Initializer  в самом начале игры (и изменяющуюся в процессе)
-4. GameEntity<BaseType> -- класс любой сущности в игре, а наследование происходит путем наследования аргумента конструктора Type в параметре. (схема наследования от BaseType приведена)
+1. The class `Game` stores the `GameWorld` field and the player as an instance of parameterized class `GameEntity<T>`, with `Player` as the type parameter.
+
+2. `GameWorld` contains the game engine. When it wants to update, `GameWorld` does not do it independently. Instead, the engine is called, which handles everything on its behalf. In any game, the state can only change under the influence of entities within it. Therefore, the engine initiates the state update process for each entity (invokes "behaviors", about them later), leading to the modification of the entire `GameWorld` state. The iteration ends, and the updated information is displayed on the screen.
+
+3. `GameWorld` also holds a map composed of `GameBlocks`, defined by a certain size, generated by the `Initializer` in the beginning of the game (and subject to changes during gameplay).
+
+4. `GameEntity<BaseType>` is a class representing any entity in the game. Inheritance occurs through the inheritance of the `Type` constructor argument in the parameter (an inheritance diagram from `BaseType` is provided).
 
 ![ABF](description/ABFDiagram.png)
 
-Здесь представлено разделение 
+Here you can see the partition into Attributes, Behaviors, Facets and Effects (ABF)
 
-1. Attributes отвечают за характеристики существ в игре (здоровье/урон/уровень/внешность/позицию/инвентарь и тд). Они определяются для определённых типов сущностей через typealias. Например, здоровье, урон и уровень заданы для GameEntity<Creature> (живой сущности), а добавочные здоровье и урон для GameEntity<Equipment> (экипировки).
-2. Behaviors отвечают за внутреннее поведение существ, где определяется необходимость или желание их совершить то или иное действие (в случае пользовательского ввода происходит интерпретация в контекст игры). Там создаются сообщения (GameMessage), которые затем передаются сущности и которые та пытается обработать.
-3. Facets отвечают за внешнее поведение. Получив сообщение, конкретный Facet интерпретирует его и соответствующим образом воздействует на состояние игры (GameWorld), которое изменяется, тем самым изменяя своё отображение на экране.
-4. Effects - это дополнительные атрибуты с ограниченным периодом действия. Они могут влиять на поведение персонажа (Behavior), или же на другие аттрибуты (не представлено в данном приложении)
+1. Attributes: They are responsible for the characteristics of entities in the game (health/damage/level/appearance/position/inventory, etc.). They are defined for specific types of entities through typealias. For example, health, damage, and level are specified for `GameEntity<Creature>` (living entity), while additional health and damage are defined for `GameEntity<Equipment>` (equipment).
 
-### Основные циклы системы
+2. Behaviors: They are responsible for the internal behavior of entities, determining the need or desire to perform specific actions (in the case of user input, an interpretation of it into the game context is done). Messages (`GameMessage`) are created, then passed to entities, which attempt to process them.
+
+3. Facets: They are responsible for external behavior. Upon receiving a message, a specific Facet interprets it and influences the game state (`GameWorld`), thereby altering its representation on the screen.
+
+4. Effects: These are additional attributes with a limited duration. They can influence the behavior of characters (Behavior) or other attributes (not implemented yet in this application).
+
+### Main system cycles
 
 ![State](description/StateDiagram.png)
 
-Изначально вы заходим в приложение и попадаем в состояние **Stay**. Каждую секунду мы обновляем состояние (**Modify state**), проходя по всем доступным сущностям (**Modify internal state**), а затем обновляем картинку на экране(**Modify view**). Помимо этого, аналогичный цикл происходит при нажатии клавиши действия пользователем.
+Initially, you enter the application and find yourself in the **Stay** state. Every second, the state is updated (**Modify state**), going through all available entities (**Modify internal state**), and then update the image on the screen (**Modify view**). In addition to this, a similar cycle occurs when the user presses an action key but only on specific entities.
 
-### Диаграмма последовательностей для одного хода пользователя
+### Step-by-step diagram of the single user input
 
 ![Order](description/OrderDiagram.png)
 
-Здесь показана полная цепочка действий (по всем задействованным классам). В Entity как раз и происходит работа по обновлению состояния приложения. В конце полученная, обновлённая версия состояния отправляется на отрисовку во View.
+Here is the complete chain of actions (across all involved classes). In the Entity class, the work on updating the application state takes place. In the end, the obtained, updated version of the state is sent to the View for rendering.
 
-### О необходимости
+### Necessarity of complexity
 
-Теперь немного о необходимости такой сложной архитектуры (разделение на ABF, Typealiases, отдельный движок). 
-Идея про ABF довольно очевидна. В любой игре у персонажа есть атрибуты, и я их выделил в отдельную категорию. Атрибуты являются уникальными для каждого персонажа, и это отличает данныю группу от Behaviors и Facets. Behaviors и Facets одинаковы для всех сущностей в игре. Разделение между ними просто: Behaviors - то, что потенциально может делать сущность (перемещаться, бить и тд). Facet - это конкретный способ производить потенциально возможные действия (можно приближаться, убегать, стоять на месте и тд). На Facet могут влиять различные эффекты, наложенные на персонажа, в то время как на Behavior они не влияют. Эффекты - элементы, имеющие лимит действия, и потому вынесенные в отдельную категорию. Поскольку набор эффектов уникален для каждой сущности, сохранение эффектов вынесено в атрибуты.
-О Typealias: это просто удобно. Мы выделяем некоторое подмножество сущностей, которые могут иметь определённые параметры, и обращаемся к ним "человеческими" названиями. Поскольку в рамках игры таких групп не так уж и много, это не вызывает путаницы.
-Отдельный движок. Я решил хранить набор сущностей отдельно от самого состояния. Здесь нужно сделать пояснение, что поскольку "Карта" является единственным и наиболее большим объектом, использовать её как контейнер состояния достаточно эффективно. При это "Карта", как объект, не должна уметь влиять на сущности, "заставлть их что-то делать". Поэтому все действия с сущностями были вынесены в отдельный класс "Движок", который хранится в "Карте", как в главном контейнере состояния.
+Now a bit about the necessity of such a complex architecture (division into ABF, Typealiases, a separate engine).
+
+The idea behind ABF is quite evident. In any game, a character has attributes, and they were placed into one category. Attributes are unique to each character, distinguishing this group from Behaviors and Facets. Behaviors and Facets are the same for all entities in the game of the same logical kind. The division between them is simple: Behaviors are what an entity can potentially do (move, attack, etc.), while a Facet is a specific way to perform those potentially possible actions (approach, retreat, stand still, etc.). Various effects can influence a Facet, while they don't affect Behaviors. Effects, being elements with a limited duration, are placed in a separate category. Since the set of effects is unique for each entity, saving effects is included in attributes.
+
+About Typealias: it's just convenient. We highlight a subset of entities that can have certain parameters and refer to them with human-readable names. Since there aren't many such groups within the game, it doesn't cause confusion.
+
+A separate engine. I decided to store the set of entities separately from the actual state. Here it's essential to clarify that since the "Map" is the only and the most extensive object, using it as a state container is quite efficient. However, as an object, the "Map" shouldn't be able to influence entities, to "make them do something." Therefore, all entity actions have been placed in a separate class, the "Engine," which is stored in the "Map" as the main state container.
