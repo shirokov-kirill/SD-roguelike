@@ -1,10 +1,9 @@
 package controller
 
 import model.entity.GameEntity
-import model.entity.types.Creature
+import model.entity.types.Player
 import model.view.state.GameWorld
 import org.hexworks.zircon.api.screen.Screen
-import model.entity.types.Player
 import org.hexworks.zircon.api.uievent.UIEvent
 
 /*

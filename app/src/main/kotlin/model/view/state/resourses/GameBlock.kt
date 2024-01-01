@@ -40,30 +40,37 @@ class GameBlock(
     val entity: GameEntity<out BaseType>
         get() = currentEntity
 
-    fun addEntity(entity: GameEntity<out BaseType>){
+    fun addEntity(entity: GameEntity<out BaseType>) {
         currentEntity = entity
         updateContent()
     }
 
-    private fun canHit(): Boolean{
+    private fun canHit(): Boolean {
         return isWall || currentEntity.isCreature()
     }
 
     fun hit(entity: GameEntity<out Creature>, context: GameContext) {
-        if(!canHit()){
+        if (!canHit()) {
             return
         } else {
-            if(isWall) {
+            if (isWall) {
                 content = FLOOR
             } else {
-                if(currentEntity.isCreature()){
-                    currentEntity.receiveMessage(Hit(currentEntity as GameEntity<Creature>, entity, entity.damage, context))
+                if (currentEntity.isCreature()) {
+                    currentEntity.receiveMessage(
+                        Hit(
+                            currentEntity as GameEntity<Creature>,
+                            entity,
+                            entity.damage,
+                            context
+                        )
+                    )
                 }
             }
         }
     }
 
-    fun removeEntity(){
+    fun removeEntity() {
         currentEntity = EntityFactory.getEmptyEntity()
         updateContent()
     }

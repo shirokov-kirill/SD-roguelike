@@ -9,4 +9,4 @@ class EquipItem(
     override val entity: GameEntity<out Creature>,
     val equipment: GameEntity<Equipment>,
     override val context: GameContext
-): GameMessage(entity, context)
+) : GameMessage(entity, context)

@@ -13,7 +13,7 @@ that shows sufficient screen according to
 InterfaceCommands from controller part
  */
 
-class Viewer{
+class Viewer {
 
     companion object {
 
@@ -24,8 +24,8 @@ class Viewer{
                 .build()
         )
 
-        fun render(input: InterfaceCommands, game: Game?, additionalInfo: AdditionalInfo?){
-            when(input){
+        fun render(input: InterfaceCommands, game: Game?, additionalInfo: AdditionalInfo?) {
+            when (input) {
                 InterfaceCommands.START -> {
                     tileGrid.clear()
                     StartView(tileGrid).dock()

@@ -31,18 +31,18 @@ targetPosition attribute
 
 fun AliveEntity.calculatePosition(): Position3D {
     val position = tryToFindAttribute(EntityPosition::class).position
-    when(tryToFindAttribute(EntityDirection::class).direction) {
+    return when (tryToFindAttribute(EntityDirection::class).direction) {
         Directions.LEFT -> {
-            return position.withRelativeX(-1)
+            position.withRelativeX(-1)
         }
         Directions.RIGHT -> {
-            return position.withRelativeX(1)
+            position.withRelativeX(1)
         }
         Directions.TOP -> {
-            return position.withRelativeY(-1)
+            position.withRelativeY(-1)
         }
         Directions.BOTTOM -> {
-            return position.withRelativeY(1)
+            position.withRelativeY(1)
         }
     }
 }
@@ -54,10 +54,10 @@ val AliveEntity.targetPosition: Position3D
 Entity inventory management
  */
 
-fun AliveEntity.equipItem(item: GameEntity<Equipment>): Boolean{
+fun AliveEntity.equipItem(item: GameEntity<Equipment>): Boolean {
     val equippedItems = this.equippedItems
-    if(this.inventory.contains(item)) {
-        when(item.type) {
+    if (this.inventory.contains(item)) {
+        when (item.type) {
             HeadEquipment -> {
                 this.equippedItems = equippedItems.set(0, item)
             }
@@ -76,10 +76,10 @@ fun AliveEntity.equipItem(item: GameEntity<Equipment>): Boolean{
     return false
 }
 
-fun AliveEntity.takeOffItem(item: GameEntity<Equipment>): Boolean{
+fun AliveEntity.takeOffItem(item: GameEntity<Equipment>): Boolean {
     val equippedItems = this.equippedItems
-    if(this.equippedItems.contains(item)) {
-        when(item.type) {
+    if (this.equippedItems.contains(item)) {
+        when (item.type) {
             HeadEquipment -> {
                 this.equippedItems = equippedItems.set(0, EquipmentFactory().getDefault())
             }
@@ -127,11 +127,11 @@ fun AliveEntity.recalculateEffects() {
     val effectsToRemove = mutableListOf<Effect>()
     for (appliedEffect in effects) {
         appliedEffect.duration -= 1
-        if(appliedEffect.duration == 0){
+        if (appliedEffect.duration == 0) {
             effectsToRemove.add(appliedEffect)
         }
     }
-    for (effect in effectsToRemove){
+    for (effect in effectsToRemove) {
         effects = effects.remove(effect)
     }
     this.effects = effects
@@ -141,12 +141,12 @@ fun AliveEntity.applyEffect(effect: Effect) {
     var effects = this.effects
     var needToAdd = true
     for (appliedEffect in effects) {
-        if(appliedEffect::class == effect::class){
+        if (appliedEffect::class == effect::class) {
             appliedEffect.duration += effect.duration
             needToAdd = false
         }
     }
-    if(needToAdd){
+    if (needToAdd) {
         effects = effects.add(effect)
     }
     this.effects = effects
@@ -164,9 +164,9 @@ var AliveEntity.effects
 Deal with Entity Experience Stats
  */
 
-fun AliveEntity.updateStats(){
+fun AliveEntity.updateStats() {
     val requiredExperience = LEVEL_EXPERIENCE_TABLE[this.level][0]
-    if(requiredExperience <= this.experience && this.level < LEVEL_EXPERIENCE_TABLE.size) {
+    if (requiredExperience <= this.experience && this.level < LEVEL_EXPERIENCE_TABLE.size) {
         this.experience = this.experience % requiredExperience
         this.level++
         this.hitPoints = LEVEL_EXPERIENCE_TABLE[level][1]
@@ -185,10 +185,10 @@ var AliveEntity.level
     }
 
 var AliveEntity.experience
-    get() = tryToFindAttribute(EntityLevel::class).expirience
+    get() = tryToFindAttribute(EntityLevel::class).experience
     set(value) {
         findAttribute(EntityLevel::class).map {
-            it.expirience = value
+            it.experience = value
         }
     }
 
@@ -206,23 +206,22 @@ fun AliveEntity.performHit(damage: Int, effects: Array<Effect>?) {
     var damageLeft = damage
     val equippedItems = this.equippedItems
     val itemsToDelete: MutableList<GameEntity<Equipment>> = mutableListOf()
-    for(item in equippedItems) {
-        if(item.hitPointsBuff > damageLeft) {
+    for (item in equippedItems) {
+        if (item.hitPointsBuff > damageLeft) {
             item.hitPointsBuff = item.hitPointsBuff - damageLeft
-            damageLeft = 0
             return
         }
-        if(item.hitPointsBuff == damageLeft) {
+        if (item.hitPointsBuff == damageLeft) {
             itemsToDelete.add(item)
             damageLeft = 0
             break
         }
-        if(item.hitPointsBuff < damageLeft) {
+        if (item.hitPointsBuff < damageLeft) {
             itemsToDelete.add(item)
             damageLeft -= item.hitPointsBuff
         }
     }
-    if(damageLeft > 0){
+    if (damageLeft > 0) {
         this.hitPoints -= damageLeft
     }
     val inventory = this.inventory
@@ -230,7 +229,7 @@ fun AliveEntity.performHit(damage: Int, effects: Array<Effect>?) {
         equippedItems.remove(item)
         inventory.remove(item)
     }
-    if(effects != null){
+    if (effects != null) {
         for (effect in effects) {
             this.applyEffect(effect)
         }
@@ -244,6 +243,9 @@ var AliveEntity.hitPoints
             it.hitPoints = value
         }
     }
+
+val AliveEntity.maxHitPoints
+    get() = LEVEL_EXPERIENCE_TABLE[this.level][1]
 
 private fun AliveEntity.calculateTotalDamage(): Int {
     val baseDamage = tryToFindAttribute(EntityLevel::class).damage
@@ -263,8 +265,9 @@ var AliveEntity.damage
         }
     }
 
-inline fun <reified T : Attribute> AliveEntity.tryToFindAttribute(klass: KClass<T>): T = findAttribute(klass).orElseThrow {
-    NoSuchElementException("Entity '$this' has no property with type '${klass.simpleName}'.")
-}
+inline fun <reified T : Attribute> AliveEntity.tryToFindAttribute(klass: KClass<T>): T =
+    findAttribute(klass).orElseThrow {
+        NoSuchElementException("Entity '$this' has no property with type '${klass.simpleName}'.")
+    }
 
 

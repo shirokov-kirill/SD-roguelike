@@ -10,13 +10,13 @@ entity with Position
 
 class EntityPosition(
     initialPosition: Position3D = Position3D.unknown()
-) : Attribute{
+) : Attribute {
 
     private val positionProperty = initialPosition.toProperty()
 
     var position: Position3D by positionProperty.asDelegate()
 
     override fun clone(): Attribute {
-        return  EntityPosition()
+        return EntityPosition()
     }
 }

@@ -20,6 +20,7 @@ var AnyEntity.position
 val AnyEntity.tile: Tile
     get() = this.tryToFindAttribute(EntityTile::class).tile
 
-inline fun <reified T : Attribute> AnyEntity.tryToFindAttribute(klass: KClass<T>): T = findAttribute(klass).orElseThrow {
-    NoSuchElementException("Entity '$this' has no property with type '${klass.simpleName}'.")
-}
+inline fun <reified T : Attribute> AnyEntity.tryToFindAttribute(klass: KClass<T>): T =
+    findAttribute(klass).orElseThrow {
+        NoSuchElementException("Entity '$this' has no property with type '${klass.simpleName}'.")
+    }

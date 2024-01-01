@@ -17,17 +17,20 @@ abstract class EntityFactory {
 
     protected fun <T : BaseType> newGameEntityOfType(
         type: T,
-        attributes: MutableList<Attribute>) = GameEntity(type, attributes, mutableListOf(), mutableListOf())
+        attributes: MutableList<Attribute>
+    ) = GameEntity(type, attributes, mutableListOf(), mutableListOf())
 
     protected fun <T : Equipment> newEquipmentOfType(
         type: T,
-        attributes: MutableList<Attribute>) = GameEntity(type, attributes, mutableListOf(), mutableListOf())
+        attributes: MutableList<Attribute>
+    ) = GameEntity(type, attributes, mutableListOf(), mutableListOf())
 
     protected fun <T : Creature> newAliveGameEntityOfType(
         type: T,
         attributes: MutableList<Attribute>,
         behaviors: MutableList<Behavior>,
-        facets: MutableList<Facet<out GameMessage>>) = GameEntity(type, attributes, behaviors, facets)
+        facets: MutableList<Facet<out GameMessage>>
+    ) = GameEntity(type, attributes, behaviors, facets)
 
     abstract fun getDefault(): GameEntity<out BaseType>
 
@@ -35,7 +38,8 @@ abstract class EntityFactory {
 
     companion object {
 
-        fun getEmptyEntity(): GameEntity<Empty> = GameEntity(Empty, mutableListOf(EntityTile(GameTiles.EMPTY)), mutableListOf(), mutableListOf())
+        fun getEmptyEntity(): GameEntity<Empty> =
+            GameEntity(Empty, mutableListOf(EntityTile(GameTiles.EMPTY)), mutableListOf(), mutableListOf())
 
     }
 }

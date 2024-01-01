@@ -19,7 +19,7 @@ class AdditionalInfoFragment(
             addComponent(Components.listItem().withText("Damage: " + info.getPlayerDamage()))
             addComponent(Components.listItem().withText("Level: " + info.getPlayerLevel()))
             addComponent(Components.header().withText("Target"))
-            if(info.getPlayerTarget() != null){
+            if (info.getPlayerTarget() != null) {
                 addComponent(Components.listItem().withText("HP: " + info.getPlayerTarget()!!.hitPoints))
             }
         }

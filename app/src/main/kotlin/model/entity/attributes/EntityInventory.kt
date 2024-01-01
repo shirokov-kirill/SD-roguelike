@@ -8,7 +8,7 @@ import org.hexworks.cobalt.databinding.api.extension.toProperty
 
 class EntityInventory(
     initialInventory: MutableList<GameEntity<Equipment>> = mutableListOf()
-) : Attribute{
+) : Attribute {
 
     private var inventoryProperty = initialInventory.toProperty()
     private val equipmentFactory = EquipmentFactory()
@@ -16,7 +16,8 @@ class EntityInventory(
         equipmentFactory.getDefault(),
         equipmentFactory.getDefault(),
         equipmentFactory.getDefault(),
-        equipmentFactory.getDefault(),).toProperty()
+        equipmentFactory.getDefault(),
+    ).toProperty()
 
     var inventory: PersistentList<GameEntity<Equipment>> by inventoryProperty.asDelegate()
     var equippedItems: PersistentList<GameEntity<Equipment>> by equippedItemsProperty.asDelegate()

@@ -6,7 +6,6 @@ import model.entity.types.Equipment
 import model.entity.types.Player
 import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.component.Fragment
-import org.hexworks.zircon.api.uievent.Processed
 
 class InventoryFragment(
     player: GameEntity<Player>,

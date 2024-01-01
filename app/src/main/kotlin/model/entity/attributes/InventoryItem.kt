@@ -16,6 +16,7 @@ val InventoryItem.damageOnHit
 val InventoryItem.name
     get() = tryToFindAttribute(InventoryItemChars::class).name
 
-inline fun <reified T : Attribute> InventoryItem.tryToFindAttribute(klass: KClass<T>): T = findAttribute(klass).orElseThrow {
-    NoSuchElementException("Entity '$this' has no property with type '${klass.simpleName}'.")
-}
+inline fun <reified T : Attribute> InventoryItem.tryToFindAttribute(klass: KClass<T>): T =
+    findAttribute(klass).orElseThrow {
+        NoSuchElementException("Entity '$this' has no property with type '${klass.simpleName}'.")
+    }

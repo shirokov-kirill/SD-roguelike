@@ -12,7 +12,7 @@ and
 about whole game
  */
 
-class AdditionalInfo() {
+class AdditionalInfo {
     private var playerHitPoints: Int = 0
     private var playerDamage: Int = 0
     private var playerLevel: Int = 0
@@ -28,15 +28,15 @@ class AdditionalInfo() {
         return this
     }
 
-    fun getPlayerHitPoints(): Int{
+    fun getPlayerHitPoints(): Int {
         return playerHitPoints
     }
 
-    fun getPlayerDamage(): Int{
+    fun getPlayerDamage(): Int {
         return playerDamage
     }
 
-    fun getPlayerLevel(): Int{
+    fun getPlayerLevel(): Int {
         return playerLevel
     }
 

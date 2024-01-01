@@ -10,7 +10,7 @@ Movable is a facet that symbolise
 that entity can move visible map frame
  */
 
-class ViewMover : BaseFacet<MoveView>(MoveView::class){
+class ViewMover : BaseFacet<MoveView>(MoveView::class) {
 
     override fun receive(message: MoveView): Response {
         val (context, source, previousPosition) = message

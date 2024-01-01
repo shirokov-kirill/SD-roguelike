@@ -1,14 +1,13 @@
 package view.views.play.resources
 
-import GameWorldColors.AGRESSIVE_MONSTER_FOREGROUND
-import GameWorldColors.DROPPED_EQUIPMENT
-import GameWorldColors.FLOOR_BACKGROUND
-import GameWorldColors.FLOOR_FOREGROUND
-import GameWorldColors.PLAYER_FOREGROUND
-import GameWorldColors.SCARED_MONSTER_FOREGROUND
-import GameWorldColors.STANDING_MONSTER_FOREGROUND
-import GameWorldColors.WALL_BACKGROUND
-import GameWorldColors.WALL_FOREGROUND
+import view.views.play.resources.GameWorldColors.AGGRESSIVE_MONSTER_FOREGROUND
+import view.views.play.resources.GameWorldColors.FLOOR_BACKGROUND
+import view.views.play.resources.GameWorldColors.FLOOR_FOREGROUND
+import view.views.play.resources.GameWorldColors.PLAYER_FOREGROUND
+import view.views.play.resources.GameWorldColors.SCARED_MONSTER_FOREGROUND
+import view.views.play.resources.GameWorldColors.STANDING_MONSTER_FOREGROUND
+import view.views.play.resources.GameWorldColors.WALL_BACKGROUND
+import view.views.play.resources.GameWorldColors.WALL_FOREGROUND
 import org.hexworks.zircon.api.data.CharacterTile
 import org.hexworks.zircon.api.data.Tile
 import org.hexworks.zircon.api.graphics.Symbols
@@ -46,9 +45,9 @@ object GameTiles {
         .withBackgroundColor(FLOOR_BACKGROUND)
         .buildCharacterTile()
 
-    val AGRESSIVE_ANCIENT: CharacterTile = Tile.newBuilder()
+    val AGGRESSIVE_ANCIENT: CharacterTile = Tile.newBuilder()
         .withCharacter('A')
-        .withForegroundColor(AGRESSIVE_MONSTER_FOREGROUND)
+        .withForegroundColor(AGGRESSIVE_MONSTER_FOREGROUND)
         .withBackgroundColor(FLOOR_BACKGROUND)
         .buildCharacterTile()
 
@@ -64,9 +63,9 @@ object GameTiles {
         .withBackgroundColor(FLOOR_BACKGROUND)
         .buildCharacterTile()
 
-    val AGRESSIVE_CORRUPTED: CharacterTile = Tile.newBuilder()
+    val AGGRESSIVE_CORRUPTED: CharacterTile = Tile.newBuilder()
         .withCharacter('C')
-        .withForegroundColor(AGRESSIVE_MONSTER_FOREGROUND)
+        .withForegroundColor(AGGRESSIVE_MONSTER_FOREGROUND)
         .withBackgroundColor(FLOOR_BACKGROUND)
         .buildCharacterTile()
 

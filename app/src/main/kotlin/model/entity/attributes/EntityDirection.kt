@@ -9,7 +9,7 @@ entity with Direction
 
 class EntityDirection(
     initialDirection: Directions = Directions.TOP
-) : Attribute{
+) : Attribute {
 
     private val directionProperty = initialDirection.toProperty()
 

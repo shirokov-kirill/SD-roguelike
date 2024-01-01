@@ -1,5 +1,3 @@
 package model.entity.types
 
-object BodyEquipment: Equipment("body") {
-
-}
+object BodyEquipment : Equipment("body")

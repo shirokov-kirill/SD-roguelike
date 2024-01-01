@@ -3,7 +3,6 @@ package model.view.state
 import controller.GameContext
 import model.entity.GameEntity
 import model.entity.attributes.addItemToInventory
-import model.entity.attributes.inventory
 import model.entity.attributes.position
 import model.entity.types.BaseType
 import model.entity.types.Creature
@@ -18,6 +17,7 @@ import org.hexworks.zircon.api.data.Tile
 import org.hexworks.zircon.api.game.GameArea
 import org.hexworks.zircon.api.screen.Screen
 import org.hexworks.zircon.api.uievent.UIEvent
+import java.awt.geom.Point2D.distance
 
 class GameWorld(
     blocks: Map<Position3D, GameBlock>,
@@ -28,7 +28,7 @@ class GameWorld(
     .withActualSize(actualSize)
     .build() {
 
-    val engine = GameEngine(this)
+    private val engine = GameEngine(this)
 
     init {
         blocks.forEach { (pos, block) ->
@@ -38,7 +38,7 @@ class GameWorld(
         }
     }
 
-    fun update(screen: Screen, event: UIEvent, player: GameEntity<Player>){
+    fun update(screen: Screen, event: UIEvent, player: GameEntity<Player>) {
         engine.executeTurn(GameContext(this, screen, event, player))
     }
 
@@ -49,12 +49,12 @@ class GameWorld(
         val new = fetchBlockAt(position)
 
         if (old.isPresent && new.isPresent) {
-            if(new.get().isEmptyBlock){
+            if (new.get().isEmptyBlock) {
                 success = true
                 old.get().removeEntity()
                 new.get().addEntity(entity)
                 entity.position = position
-            } else if(new.get().isEquipmentEntity){
+            } else if (new.get().isEquipmentEntity) {
                 success = true
                 entity.addItemToInventory(new.get().entity as GameEntity<Equipment>)
                 old.get().removeEntity()
@@ -67,14 +67,20 @@ class GameWorld(
 
     fun performHit(position: Position3D, fromEntity: GameEntity<out Creature>, context: GameContext) {
         val target = fetchBlockAt(position)
-        if(target.isPresent) {
+        val fromPos = fromEntity.position
+        if (target.isPresent && areNeighbors(fromPos, position)) {
             target.get().hit(fromEntity, context)
         }
     }
 
+    private fun areNeighbors(
+        fromPos: Position3D,
+        position: Position3D
+    ) = distance(fromPos.x.toDouble(), fromPos.y.toDouble(), position.x.toDouble(), position.y.toDouble()) == 1.0
+
     fun getCreatureOnPosition(position: Position3D): GameEntity<Creature>? {
         val gameEntity = fetchBlockAt(position).map {
-            if(it.isEmptyBlock) {
+            if (it.isEmptyBlock) {
                 return@map null
             } else {
                 if (it.entity.isCreature()) {
@@ -84,22 +90,21 @@ class GameWorld(
                 }
             }
         }
-        if(gameEntity.isPresent) {
+        if (gameEntity.isPresent) {
             return gameEntity.get() as GameEntity<Creature>
         }
         return null
     }
 
-    fun addEntity(entity: GameEntity<out BaseType>, withGuarantee: Boolean, mapSize: Size3D = visibleSize): Boolean{
-        var attemptsCount: Int
-        if(withGuarantee){
-            attemptsCount = -1
+    fun addEntity(entity: GameEntity<out BaseType>, withGuarantee: Boolean, mapSize: Size3D = visibleSize): Boolean {
+        var attemptsCount: Int = if (withGuarantee) {
+            -1
         } else {
-            attemptsCount = 4
+            4
         }
         var res = Maybe.empty<Boolean>()
         var position: Position3D = Position3D.unknown()
-        while (attemptsCount != 0 && !res.isPresent){
+        while (attemptsCount != 0 && !res.isPresent) {
 
             position = Position3D.create(
                 (Math.random() * mapSize.xLength).toInt(),
@@ -108,13 +113,13 @@ class GameWorld(
             )
 
             fetchBlockAt(position).map {
-                if(it.isEmptyBlock){
+                if (it.isEmptyBlock) {
                     res = Maybe.of(it.isEmptyBlock)
                 }
             }
             attemptsCount--
         }
-        if(res.isPresent && res.get()){
+        if (res.isPresent && res.get()) {
             entity.position = position
             engine.addEntity(entity)
             fetchBlockAt(position).map {
@@ -125,7 +130,7 @@ class GameWorld(
         return false
     }
 
-    fun removeEntity(entity: GameEntity<out BaseType>){
+    fun removeEntity(entity: GameEntity<out BaseType>) {
 
         fetchBlockAt(entity.position).map {
             it.removeEntity()

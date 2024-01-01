@@ -20,13 +20,13 @@ class StateModificationsHandler(game: Game, additionalInfo: AdditionalInfo) {
         return currentAppState.getInfo()
     }
 
-    fun updateCurrentGame(screen: Screen, uiEvent: UIEvent): Game{
+    fun updateCurrentGame(screen: Screen, uiEvent: UIEvent): Game {
         currentAppState.updateGame(screen, uiEvent)
         currentAppState.updateInfo()
         return currentAppState.getGame()
     }
 
-    fun performEquipItemAction(entity: GameEntity<Equipment>): Game{
+    fun performEquipItemAction(entity: GameEntity<Equipment>): Game {
         currentAppState.performEquipItemAction(entity)
         currentAppState.updateInfo()
         return currentAppState.getGame()

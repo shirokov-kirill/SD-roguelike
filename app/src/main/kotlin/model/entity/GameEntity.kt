@@ -1,8 +1,6 @@
 package model.entity
 
-import com.google.gson.Gson
 import controller.GameContext
-import controller.messages.Clone
 import controller.messages.GameMessage
 import controller.messages.Pass
 import controller.messages.Response
@@ -12,14 +10,13 @@ import model.entity.facets.Facet
 import model.entity.types.BaseType
 import model.entity.types.Creature
 import org.hexworks.cobalt.datatypes.Maybe
-import org.hexworks.zircon.api.behavior.Copiable
 import kotlin.reflect.KClass
 
 /*
 GameEntity is a base class for any entity in the game
  */
 
-open class GameEntity<T: BaseType>(
+open class GameEntity<T : BaseType>(
     open val type: T,
     open val attributes: MutableList<out Attribute>,
     val behaviors: MutableList<Behavior>,
@@ -32,8 +29,8 @@ open class GameEntity<T: BaseType>(
     */
 
     inline fun <reified V : Attribute> findAttribute(klass: KClass<V>): Maybe<V> {
-        for(attribute in attributes) {
-            if(attribute is V){
+        for (attribute in attributes) {
+            if (attribute is V) {
                 return Maybe.of(attribute)
             }
         }
@@ -50,12 +47,11 @@ open class GameEntity<T: BaseType>(
     */
 
     fun receiveMessage(message: GameMessage): Response {
-        if(isCreature()){
+        if (isCreature()) {
             var response: Response = Pass
-            for(facet in facets) {
-                var lastCommand = message
+            for (facet in facets) {
                 if (response == Pass) {
-                    response = facet.tryReceive(lastCommand)
+                    response = facet.tryReceive(message)
                 }
             }
             return response
@@ -78,7 +74,7 @@ open class GameEntity<T: BaseType>(
     */
 
     fun update(context: GameContext): Boolean {
-        if(isCreature()){
+        if (isCreature()) {
             return behaviors.fold(false) { result, behavior ->
                 result or behavior.update(this as GameEntity<Creature>, context)
             }
