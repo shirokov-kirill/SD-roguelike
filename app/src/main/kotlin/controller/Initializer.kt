@@ -1,7 +1,9 @@
 package controller
 
 import model.StateModificationsHandler
-import model.entity.EntityFactory
+import model.entity.factory.AncientMobsFactory
+import model.entity.factory.CorruptedMobsFactory
+import model.entity.factory.EquipmentFactory
 import model.state.AdditionalInfo
 import model.view.state.Game
 
@@ -21,16 +23,16 @@ class Initializer {
 
         fun initialize(
             type: String = GameWorldBuilder.GENERATE,
-            filePath: String = ""
+            filePath: String = "",
+            difficulty: Difficulty
         ): StateModificationsHandler {
-            val gameWorld = GameWorldBuilder(GameConfig.WORLD_SIZE)
-                .passLoadingType(type, filePath)
-                .proceed()
+            val (gameWorld, player) = GameWorldBuilder(GameConfig.WORLD_SIZE)
+                .passLoadingType(type)
+                .passFilePath(filePath)
+                .passDifficulty(difficulty)
+                .withMobsFactory(CorruptedMobsFactory())
+                .withEquipmentFactory(EquipmentFactory())
                 .build(GameConfig.GAME_AREA_SIZE)
-
-            val player = EntityFactory.createPlayer()
-
-            gameWorld.addEntity(player, true)
 
             val game = Game(
                 gameWorld,

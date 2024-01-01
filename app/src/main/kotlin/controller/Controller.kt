@@ -1,7 +1,10 @@
 package controller
 
 import model.StateModificationsHandler
+import model.entity.GameEntity
+import model.entity.types.Equipment
 import org.hexworks.zircon.api.screen.Screen
+import org.hexworks.zircon.api.uievent.KeyCode
 import org.hexworks.zircon.api.uievent.KeyboardEvent
 import org.hexworks.zircon.api.uievent.UIEvent
 import view.InterfaceCommands
@@ -10,6 +13,7 @@ import view.Viewer
 class Controller {
 
     companion object {
+        var isActive: Boolean = false
         private var isFinished = false
         private var stateModificationsHandler : StateModificationsHandler? = null
 
@@ -28,7 +32,18 @@ class Controller {
          */
 
         fun throwMouseInput(input: InterfaceCommands){
+            if (input == InterfaceCommands.TO_PLAY){
+                isActive = true
+            }
             interpret(input)
+        }
+
+        fun performEquipItemAction(entity: GameEntity<Equipment>) {
+            Viewer.render(InterfaceCommands.TO_INVENTORY, stateModificationsHandler?.performEquipItemAction(entity), stateModificationsHandler?.getAdditionalInfo())
+        }
+
+        fun performTakeOffItemAction(entity: GameEntity<Equipment>) {
+            Viewer.render(InterfaceCommands.TO_INVENTORY, stateModificationsHandler?.performTakeOffItemAction(entity), stateModificationsHandler?.getAdditionalInfo())
         }
 
         /*
@@ -37,16 +52,28 @@ class Controller {
          */
 
         fun throwKeyboardInput(input: KeyboardEvent, screen: Screen){
-            when(input.key) {
-                "w" -> interpret(InterfaceCommands.GO_TOP, input, screen)
-                "a" -> interpret(InterfaceCommands.GO_LEFT, input, screen)
-                "s" -> interpret(InterfaceCommands.GO_BOTTOM, input, screen)
-                "d" -> interpret(InterfaceCommands.GO_RIGHT, input, screen)
-                " " -> interpret(InterfaceCommands.HIT, input, screen)
+            when(input.code) {
+                KeyCode.KEY_W -> interpret(InterfaceCommands.GO_TOP, input, screen)
+                KeyCode.KEY_A -> interpret(InterfaceCommands.GO_LEFT, input, screen)
+                KeyCode.KEY_S -> interpret(InterfaceCommands.GO_BOTTOM, input, screen)
+                KeyCode.KEY_D -> interpret(InterfaceCommands.GO_RIGHT, input, screen)
+                KeyCode.SPACE -> interpret(InterfaceCommands.HIT, input, screen)
                 else -> {
                     print(input.key)
                 }
             }
+        }
+
+        fun onInventoryOpen() {
+            isActive = false
+        }
+
+        fun onInventoryClose() {
+            isActive = true
+        }
+
+        fun onGameSecondlyChange() {
+            interpret(InterfaceCommands.TO_PLAY)
         }
 
         /*
@@ -56,7 +83,7 @@ class Controller {
 
         private fun initializeGame(){
             if(stateModificationsHandler == null){
-                stateModificationsHandler = Initializer.initialize(GameWorldBuilder.GENERATE, "")
+                stateModificationsHandler = Initializer.initialize(GameWorldBuilder.GENERATE, "", Difficulty.EASY)
             }
         }
 

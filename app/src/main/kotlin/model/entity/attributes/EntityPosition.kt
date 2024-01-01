@@ -15,4 +15,8 @@ class EntityPosition(
     private val positionProperty = initialPosition.toProperty()
 
     var position: Position3D by positionProperty.asDelegate()
+
+    override fun clone(): Attribute {
+        return  EntityPosition()
+    }
 }

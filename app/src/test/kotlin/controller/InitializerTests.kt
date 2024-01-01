@@ -7,7 +7,7 @@ class InitializerTests {
 
     @Test
     fun testInitializeForValidStateModificationHandler(){
-        val stateModificationsHandler = Initializer.initialize()
+        val stateModificationsHandler = Initializer.initialize(difficulty = Difficulty.EASY)
         assertEquals(false, stateModificationsHandler == null)
         assertEquals(false, stateModificationsHandler.getAdditionalInfo() == null)
         assertEquals(false, stateModificationsHandler.getGame() == null)
@@ -16,7 +16,7 @@ class InitializerTests {
     @Test
     fun testInitializeForNotImplementedError(){
         try{
-            val stateModificationsHandler = Initializer.initialize(GameWorldBuilder.LOAD, "")
+            val stateModificationsHandler = Initializer.initialize(GameWorldBuilder.LOAD, "", Difficulty.EASY)
             assert(false)
         } catch (e: NotImplementedError){
             return

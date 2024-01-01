@@ -13,13 +13,13 @@ interface Facet<Message>{
     receive(message) performs an action on entity
      */
 
-    suspend fun receive(message: Message): Response
+    fun receive(message: Message): Response
 
     /*
     tryReceive(message) tries to apply an action on an entity
     with facets (by message::class)
      */
 
-    suspend fun tryReceive(message: GameMessage): Response
+    fun tryReceive(message: GameMessage): Response
 
 }

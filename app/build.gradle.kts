@@ -16,6 +16,7 @@ dependencies {
     testImplementation(kotlin("test"))
     implementation("org.hexworks.zircon:zircon.core-jvm:2020.2.0-RELEASE")
     implementation("org.hexworks.zircon:zircon.jvm.swing:2020.2.0-RELEASE")
+    implementation("com.google.code.gson:gson:2.8.6")
 }
 
 tasks.test {

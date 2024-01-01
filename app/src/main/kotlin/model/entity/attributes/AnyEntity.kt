@@ -17,14 +17,6 @@ var AnyEntity.position
         }
     }
 
-var AnyEntity.direction
-    get() = tryToFindAttribute(EntityDirection::class).direction
-    set(value) {
-        findAttribute(EntityDirection::class).map {
-            it.direction = value
-        }
-    }
-
 val AnyEntity.tile: Tile
     get() = this.tryToFindAttribute(EntityTile::class).tile
 

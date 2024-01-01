@@ -2,8 +2,12 @@ package model.view.state
 
 import controller.GameContext
 import model.entity.GameEntity
+import model.entity.attributes.addItemToInventory
+import model.entity.attributes.inventory
 import model.entity.attributes.position
 import model.entity.types.BaseType
+import model.entity.types.Creature
+import model.entity.types.Equipment
 import model.entity.types.Player
 import model.view.state.resourses.GameBlock
 import org.hexworks.cobalt.datatypes.Maybe
@@ -24,7 +28,7 @@ class GameWorld(
     .withActualSize(actualSize)
     .build() {
 
-    val engine = GameEngine()
+    val engine = GameEngine(this)
 
     init {
         blocks.forEach { (pos, block) ->
@@ -34,30 +38,56 @@ class GameWorld(
         }
     }
 
-    fun update(screen: Screen, event: UIEvent, player: GameEntity<Player>) {
+    fun update(screen: Screen, event: UIEvent, player: GameEntity<Player>){
         engine.executeTurn(GameContext(this, screen, event, player))
     }
 
-    fun moveEntity(entity: GameEntity<out BaseType>, position: Position3D): Boolean {
+    fun moveEntity(entity: GameEntity<out Creature>, position: Position3D): Boolean {
         var success = false
 
         val old = fetchBlockAt(entity.position)
         val new = fetchBlockAt(position)
 
-        if (old.isPresent && new.isPresent && new.get().isEmptyBlock) {
-            success = true
-            old.get().removeEntity()
-            new.get().addEntity(entity)
-            entity.position = position
+        if (old.isPresent && new.isPresent) {
+            if(new.get().isEmptyBlock){
+                success = true
+                old.get().removeEntity()
+                new.get().addEntity(entity)
+                entity.position = position
+            } else if(new.get().isEquipmentEntity){
+                success = true
+                entity.addItemToInventory(new.get().entity as GameEntity<Equipment>)
+                old.get().removeEntity()
+                new.get().addEntity(entity)
+                entity.position = position
+            }
         }
         return success
     }
 
-    fun performHit(position: Position3D) {
+    fun performHit(position: Position3D, fromEntity: GameEntity<out Creature>, context: GameContext) {
         val target = fetchBlockAt(position)
         if(target.isPresent) {
-            target.get().hit()
+            target.get().hit(fromEntity, context)
         }
+    }
+
+    fun getCreatureOnPosition(position: Position3D): GameEntity<Creature>? {
+        val gameEntity = fetchBlockAt(position).map {
+            if(it.isEmptyBlock) {
+                return@map null
+            } else {
+                if (it.entity.isCreature()) {
+                    return@map it.entity
+                } else {
+                    return@map null
+                }
+            }
+        }
+        if(gameEntity.isPresent) {
+            return gameEntity.get() as GameEntity<Creature>
+        }
+        return null
     }
 
     fun addEntity(entity: GameEntity<out BaseType>, withGuarantee: Boolean, mapSize: Size3D = visibleSize): Boolean{
@@ -93,5 +123,13 @@ class GameWorld(
             return true
         }
         return false
+    }
+
+    fun removeEntity(entity: GameEntity<out BaseType>){
+
+        fetchBlockAt(entity.position).map {
+            it.removeEntity()
+        }
+        engine.removeEntity(entity)
     }
 }

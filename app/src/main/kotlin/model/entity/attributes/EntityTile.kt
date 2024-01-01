@@ -7,4 +7,8 @@ This is an Attribute class that provides
 entity with its tile view
  */
 
-data class EntityTile(val tile: Tile = Tile.empty()) : Attribute
+data class EntityTile(val tile: Tile = Tile.empty()) : Attribute {
+    override fun clone(): Attribute {
+        return EntityTile(tile)
+    }
+}

@@ -12,7 +12,7 @@ that entity can move visible map frame
 
 class ViewMover : BaseFacet<MoveView>(MoveView::class){
 
-    override suspend fun receive(message: MoveView): Response {
+    override fun receive(message: MoveView): Response {
         val (context, source, previousPosition) = message
         val world = context.world
         val screenPos = source.position - world.visibleOffset
